@@ -1,0 +1,14 @@
+package PlayerData
+import Colors
+
+public class PlayerData
+	player 	p
+	int 	id
+	string 	name
+	string 	stylizedName
+	
+	construct(player p)
+		this.p = p
+		id = p.getId()
+		name = p.getName()
+		stylizedName = p.getNameColored()

@@ -1,0 +1,30 @@
+package Round
+import MapBounds
+import MapConstants
+import Statistics
+import Entity
+
+public function newRound()
+	clearStatistics()
+	clearArena()
+	createBuilders()
+	adjustCamerasAndSelection()
+
+public function endRound(Team winner)
+	showRoundStatistics(winner)
+
+function adjustCamerasAndSelection()
+	
+
+function createBuilders()
+	// TODO peq
+	
+function clearArena()
+	GroupEnumUnitsInRect(ENUM_GROUP, mapRect, null)
+	for u in ENUM_GROUP
+		if(u.getEntity() != null)
+			destroy u.getEntity()
+		else
+			u.remove()
+		
+	ENUM_GROUP.clear()

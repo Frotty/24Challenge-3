@@ -1,0 +1,6 @@
+package GameInit
+
+function initGame()
+
+init
+	CreateTimer().start(0.01, function initGame)

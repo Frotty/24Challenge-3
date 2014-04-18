@@ -1,9 +1,11 @@
 package Round
 import MapBounds
 import MapConstants
+import PlayerData
 import Statistics
 import Entity
 import OEbuilder
+import Builder
 
 public function newRound()
 	clearStatistics()
@@ -26,6 +28,14 @@ function createBuilders()
 			p.setState(PLAYER_STATE_RESOURCE_GOLD, 200)
 	// TODO frotty should builders be entities?
 	// TODO frotty should builders be stored in some array?
+	var count = 0
+	for p in red_players
+		p.builder = new Builder(createUnit(p.p, builderID, TEAM_RED_RITUAL.polarOffset((count*(360/red_players.getSize())).asAngleDegrees(), 128), angle(0)))
+		count++
+	count = 0
+	for p in green_players
+		p.builder = new Builder(createUnit(p.p, builderID, TEAM_GREEN_RITUAL.polarOffset((count*(360/green_players.getSize())).asAngleDegrees(), 128), angle(0)))
+		count++
 	
 function clearArena()
 	GroupEnumUnitsInRect(ENUM_GROUP, mapRect, null)

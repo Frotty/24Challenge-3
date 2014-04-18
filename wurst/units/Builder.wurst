@@ -1,0 +1,7 @@
+package Builder
+import Entity
+
+public class Builder extends UnitEntity
+	
+	construct(unit u)
+		super(u)

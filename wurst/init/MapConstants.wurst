@@ -1,0 +1,15 @@
+package MapConstants
+
+public enum Team
+	RED
+	GREEN
+
+public constant TEAM_RED_RITUAL = vec2(0,0)
+public constant TEAM_GREEN_RITUAL = vec2(0,0)
+
+public function unit.getTeam() returns Team
+	let id = this.getOwner().getId()
+	if id < 6
+		return Team.RED
+	else
+		return Team.GREEN

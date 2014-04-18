@@ -1,6 +1,7 @@
 package Round
 import MapBounds
 import Statistics
+import Entity
 
 public function newRound()
 	clearStatistics()
@@ -13,6 +14,9 @@ public function endRound()
 function clearArena()
 	GroupEnumUnitsInRect(ENUM_GROUP, mapRect, null)
 	for u in ENUM_GROUP
-		u.remove()
+		if(u.getEntity() != null)
+			destroy u.getEntity()
+		else
+			u.remove()
 		
 	ENUM_GROUP.clear()

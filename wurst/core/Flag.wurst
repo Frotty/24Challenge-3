@@ -1,0 +1,29 @@
+package Flag
+import Entity
+import MapConstants
+
+constant FLAG_ID = 'Iflg'
+
+public class Flag
+	item visual
+	unit carrier
+	
+	construct(vec2 pos)
+		CreateItem(FLAG_ID, pos.x, pos.y)
+		
+	static function onPickupEvent()
+		let carrier = GetTriggerUnit()
+		let flag = GetManipulatedItem().getEntity()
+		
+		if flag != null
+			if carrier.getTeam() == Team.RED
+				carrier.issuePointOrder("move", TEAM_RED_RITUAL)
+			else
+				carrier.issuePointOrder("move", TEAM_GREEN_RITUAL)
+				
+	
+	static function onDropEvent()
+		
+public function initFlag()
+	CreateTrigger()..registerAnyUnitEvent(EVENT_PLAYER_UNIT_PICKUP_ITEM)..addAction(function Flag.onPickupEvent)
+	CreateTrigger()..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DROP_ITEM)..addAction(function Flag.onDropEvent)

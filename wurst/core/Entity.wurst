@@ -7,6 +7,18 @@ import public LinkedList
 
 public vec3 gravity = vec3(0,0,-0.8)
 
+public function item.getEntity() returns Entity
+	return this.getUserData() castTo Entity
+	
+public function item.setEntity(Entity e)
+	this.setUserData(e castTo int)
+
+public function unit.getEntity() returns Entity
+	return this.getUserData() castTo Entity
+	
+public function unit.setEntity(Entity e)
+	this.setUserData(e castTo int)
+	
 /** Base Entity Class  */
 public abstract class Entity
 	use LinkedListModule

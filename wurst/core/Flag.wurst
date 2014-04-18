@@ -6,6 +6,7 @@ import initlater Round
 constant FLAG_ID = 'Iflg'
 constant STD_FLAG_POS = vec3(0,0,0)
 
+// Sheep that is needed for the ritual
 public class Flag extends Entity
 	static thistype INSTANCE
 	item visual
@@ -23,6 +24,7 @@ public class Flag extends Entity
 		visual.setEntity(this)
 		INSTANCE = this
 		
+	// Check if Sheep inside ritualbase
 	override function update()
 		if carrier != null
 			if carrier.getTeam() == Team.RED
@@ -31,27 +33,6 @@ public class Flag extends Entity
 			else
 				if carrier.getEntity().pos.toVec2().distToVecSquared(TEAM_GREEN_RITUAL) < 128*128
 					endRound(Team.GREEN)
-		
-	static function onPickupEvent()
-		let carrier = GetTriggerUnit()
-		let flag = GetManipulatedItem().getEntity()
-		
-		if flag != null
-			Flag.INSTANCE.carrier = carrier
-			if carrier.getTeam() == Team.RED
-				carrier.issuePointOrder("move", TEAM_RED_RITUAL)
-			else
-				carrier.issuePointOrder("move", TEAM_GREEN_RITUAL)
-				
-	
-	static function onDeathEvent()
-		let u = GetDyingUnit()
-		let killer = GetKillingUnit()
-		if u == Flag.INSTANCE.carrier
-			Flag.INSTANCE.carrier = killer
-			Flag.INSTANCE.visual.remove()
-			killer.addItem(FLAG_ID)
-			Flag.INSTANCE.visual = UnitItemInSlot(killer, 0)
 			
 	ondestroy
 		visual.remove()
@@ -59,6 +40,31 @@ public class Flag extends Entity
 			
 		
 public function initFlag()
-	CreateTrigger()..registerAnyUnitEvent(EVENT_PLAYER_UNIT_PICKUP_ITEM)..addAction(function Flag.onPickupEvent)
-	CreateTrigger()..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DEATH)..addAction(function Flag.onDeathEvent)
+	CreateTrigger()
+		..registerAnyUnitEvent(EVENT_PLAYER_UNIT_PICKUP_ITEM)
+		..addAction(() -> begin
+		let carrier = GetTriggerUnit()
+		let flag = GetManipulatedItem().getEntity()
+		// If a unit receives the flag it automatically walks home
+		if flag != null
+			Flag.INSTANCE.carrier = carrier
+			if carrier.getTeam() == Team.RED
+				carrier.issuePointOrder("move", TEAM_RED_RITUAL)
+			else
+				carrier.issuePointOrder("move", TEAM_GREEN_RITUAL)
+				
+			
+	end)
+	CreateTrigger()
+		..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DEATH)
+		..addAction(() -> begin
+		let u = GetDyingUnit()
+		let killer = GetKillingUnit()
+		if u == Flag.INSTANCE.carrier
+			// Transfer Flag to Killer
+			Flag.INSTANCE.carrier = killer
+			Flag.INSTANCE.visual.remove()
+			killer.addItem(FLAG_ID)
+			Flag.INSTANCE.visual = UnitItemInSlot(killer, 0)
+	end)
 	

@@ -14,18 +14,27 @@ import ObjectIds
 	var buildings = ""
 	for sd in spawnData
 		let ud = new UnitDefinition(sd.id, sd.baseUnit)
+		ud.setName(sd.name)
+		ud.setIconGameInterface(sd.icon)
+		ud.setTooltipBasic("Train " + sd.name + " [" + sd.hotkey + "]")
+		ud.setTooltipExtended(sd.getExtendedDescription())
+		ud.setHotkey(sd.hotkey)
+		
 		ud.setHitPointsMaximumBase(sd.maxHP)
 		ud.setManaMaximum(sd.maxMana)
+		ud.setNormalAbilities("")
+		
+		
 		// only attack 1
 		ud.setAttacksEnabled(1)
 		ud.setAttack1CooldownTime(sd.attackCooldown)
 		ud.setAttack1DamageBase(sd.damageMin-1)
 		ud.setAttack1DamageNumberofDice(1)
-		ud.setAttack1DamageSidesperDie(1 + sd.damageMax - sd.damageMax)
-		// TODO attacktype
+		ud.setAttack1DamageSidesperDie(1 + sd.damageMax - sd.damageMin)
+		ud.setAttack1AttackType(sd.attackType.toObjectString())
 				
 		// armor
-		// TODO ud.setDefenseType(sd.armorType castTo int)
+		ud.setDefenseType(sd.armorType.toObjectString())
 		ud.setDefenseBase(sd.armor)
 		ud.setGoldCost(0)
 		ud.setFoodCost(0)
@@ -35,9 +44,16 @@ import ObjectIds
 		// create the production building:
 		int buildingId = sd.id + 256*256*256
 		let b = new BuildingDefinition(buildingId, 'hhou') // based on farm
+		b.setName(sd.productionBuildingName)
+		b.setIconGameInterface(sd.icon)
+		b.setTooltipBasic("Build " + sd.name + " [" + sd.hotkey + "]")
+		b.setTooltipExtended(sd.getExtendedDescription())
+		b.setHotkey(sd.hotkey)
 		b.setGoldCost(sd.goldCost)
 		b.setLumberCost(0)
 		b.setFoodProduced(0)
+		b.setRepairGoldCost(0)
+		b.setRepairLumberCost(0)
 		b.setModelFile(sd.productionBuildingModel)
 		b.setScalingValue(sd.productionBuildingScale)
 		b.setBuildTime(2)

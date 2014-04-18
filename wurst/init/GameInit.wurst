@@ -1,10 +1,11 @@
 package GameInit
 import Round
 import ClosureTimers
+import PlayerData
 
 init
 	// really cool closure init :)
 	doAfter(0.01, () -> begin
-		// TODO frotty
+		initPlayers()
 		newRound()
 	end)

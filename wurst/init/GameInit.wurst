@@ -1,6 +1,10 @@
 package GameInit
-
-function initGame()
+import Round
+import ClosureTimers
 
 init
-	CreateTimer().start(0.01, function initGame)
+	// really cool closure init :)
+	doAfter(0.01, () -> begin
+		// TODO frotty
+		newRound()
+	end)

@@ -3,6 +3,7 @@ import MapBounds
 import MapConstants
 import Statistics
 import Entity
+import OEbuilder
 
 public function newRound()
 	clearStatistics()
@@ -17,7 +18,11 @@ function adjustCamerasAndSelection()
 	
 
 function createBuilders()
-	// TODO peq
+	for p in bj_FORCE_ALL_PLAYERS
+		if p.getSlotState() == PLAYER_SLOT_STATE_PLAYING
+			CreateUnit(p, builderID, GetPlayerStartLocationX(p), GetPlayerStartLocationY(p), 0)
+	// TODO frotty should builders be entities?
+	// TODO frotty should builders be stored in some array?
 	
 function clearArena()
 	GroupEnumUnitsInRect(ENUM_GROUP, mapRect, null)

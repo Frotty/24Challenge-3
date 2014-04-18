@@ -20,14 +20,6 @@ function adjustCamerasAndSelection()
 	
 
 function createBuilders()
-	for p in bj_FORCE_ALL_PLAYERS
-		if p.getSlotState() == PLAYER_SLOT_STATE_PLAYING
-			// builder
-			CreateUnit(p, builderID, GetPlayerStartLocationX(p), GetPlayerStartLocationY(p), 0)
-			// initial gold
-			p.setState(PLAYER_STATE_RESOURCE_GOLD, 200)
-	// TODO frotty should builders be entities?
-	// TODO frotty should builders be stored in some array?
 	var count = 0
 	for p in red_players
 		p.builder = new Builder(createUnit(p.p, builderID, TEAM_RED_RITUAL.polarOffset((count*(360/red_players.getSize())).asAngleDegrees(), 128), angle(0)))

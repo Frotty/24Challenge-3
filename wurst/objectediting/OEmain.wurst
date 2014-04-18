@@ -41,6 +41,7 @@ import ObjectIds
 		b.setModelFile(sd.productionBuildingModel)
 		b.setScalingValue(sd.productionBuildingScale)
 		b.setBuildTime(2)
+		b.setUnitsTrained(idInteger2IdString(sd.id))
 		
 		if buildings != ""
 			buildings += ","

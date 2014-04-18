@@ -1,8 +1,29 @@
 package SpawnData
 import LinkedList
+import HashMap
 
 // general class for storing the data of a spawned unit
 // from this, the OE data is generated, but it can also be used ingame
+
+/** a list of all the spawnData */
+public LinkedList<SpawnData> spawnData
+HashMap<int, SpawnData> unitIdToSpawnData
+
+init
+	spawnData = spawnData()
+	unitIdToSpawnData = new HashMap<int, SpawnData>
+	for s in spawnData
+		unitIdToSpawnData.put(s.id, s)
+		
+public function getSpawnData(int unitId) returns SpawnData
+	return unitIdToSpawnData.get(unitId)
+	
+public function unit.getSpawnData() returns SpawnData
+	return unitIdToSpawnData.get(this.getTypeId())
+
+public function unit.getSpawnDataForBuilding() returns SpawnData
+	return unitIdToSpawnData.get(this.getTypeId() - 256*256*256)
+
 
 public enum SpawnClass
 	Attacker

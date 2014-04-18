@@ -1,0 +1,27 @@
+package UnitProduction
+
+init
+	CreateTrigger()
+		..registerAnyUnitEvent(EVENT_PLAYER_UNIT_CONSTRUCT_FINISH)
+		..addAction(() -> begin
+		let b = GetConstructedStructure()
+
+		// order the constructed building to build two units of the produced unit
+		for i = 1 to 2
+			IssueImmediateOrderById(b, b.getTypeId() - 256*256*256)
+	end)
+	
+	CreateTrigger()
+		..registerAnyUnitEvent(EVENT_PLAYER_UNIT_TRAIN_FINISH)
+		..addAction(() -> begin
+		let trained = GetTrainedUnit()
+		let b = GetTriggerUnit()
+		// issue building to construct a new unit of this type		
+		IssueImmediateOrderById(b, trained.getTypeId())
+		aiStartControl(trained)
+	end)
+	
+/** control what this unit should do after it has been trained */
+function aiStartControl(unit u)
+	// TODO frotty make this smarter :)
+	IssuePointOrder(u, "attack", 0, 0)

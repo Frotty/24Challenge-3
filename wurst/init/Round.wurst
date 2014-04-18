@@ -6,12 +6,14 @@ import Statistics
 import Entity
 import OEbuilder
 import Builder
+import Flag
 
 public function newRound()
 	clearStatistics()
 	clearArena()
 	createBuilders()
 	adjustCamerasAndSelection()
+	new Flag()
 
 public function endRound(Team winner)
 	showRoundStatistics(winner)
@@ -28,6 +30,9 @@ function createBuilders()
 	for p in green_players
 		p.builder = new Builder(createUnit(p.p, builderID, TEAM_GREEN_RITUAL.polarOffset((count*(360/green_players.getSize())).asAngleDegrees(), 128), angle(0)))
 		count++
+		
+function clearItems()
+	destroy GetEnumItem().getEntity()
 	
 function clearArena()
 	GroupEnumUnitsInRect(ENUM_GROUP, mapRect, null)
@@ -36,5 +41,7 @@ function clearArena()
 			destroy u.getEntity()
 		else
 			u.remove()
+			
+	EnumItemsInRect(mapRect, null, function clearItems)
 		
 	ENUM_GROUP.clear()

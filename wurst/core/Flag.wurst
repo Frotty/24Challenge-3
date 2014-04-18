@@ -1,22 +1,51 @@
 package Flag
 import Entity
 import MapConstants
+import initlater Round
 
 constant FLAG_ID = 'Iflg'
+constant STD_FLAG_POS = vec3(0,0,0)
 
-public class Flag
+// Sheep that is needed for the ritual
+public class Flag extends Entity
 	static thistype INSTANCE
 	item visual
 	unit carrier
 	
-	construct(vec2 pos)
+	construct()
+		super(STD_FLAG_POS, DUMMY_PLAYER)
 		visual = CreateItem(FLAG_ID, pos.x, pos.y)
+		visual.setEntity(this)
 		INSTANCE = this
 		
-	static function onPickupEvent()
+	construct(vec2 pos)
+		super(pos.withZ(0.), DUMMY_PLAYER)
+		visual = CreateItem(FLAG_ID, pos.x, pos.y)
+		visual.setEntity(this)
+		INSTANCE = this
+		
+	// Check if Sheep inside ritualbase
+	override function update()
+		if carrier != null
+			if carrier.getTeam() == Team.RED
+				if carrier.getEntity().pos.toVec2().distToVecSquared(TEAM_RED_RITUAL) < 128*128
+					endRound(Team.RED)
+			else
+				if carrier.getEntity().pos.toVec2().distToVecSquared(TEAM_GREEN_RITUAL) < 128*128
+					endRound(Team.GREEN)
+			
+	ondestroy
+		visual.remove()
+		INSTANCE = null
+			
+		
+public function initFlag()
+	CreateTrigger()
+		..registerAnyUnitEvent(EVENT_PLAYER_UNIT_PICKUP_ITEM)
+		..addAction(() -> begin
 		let carrier = GetTriggerUnit()
 		let flag = GetManipulatedItem().getEntity()
-		
+		// If a unit receives the flag it automatically walks home
 		if flag != null
 			Flag.INSTANCE.carrier = carrier
 			if carrier.getTeam() == Team.RED
@@ -24,18 +53,18 @@ public class Flag
 			else
 				carrier.issuePointOrder("move", TEAM_GREEN_RITUAL)
 				
-	
-	static function onDeathEvent()
+			
+	end)
+	CreateTrigger()
+		..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DEATH)
+		..addAction(() -> begin
 		let u = GetDyingUnit()
 		let killer = GetKillingUnit()
 		if u == Flag.INSTANCE.carrier
+			// Transfer Flag to Killer
 			Flag.INSTANCE.carrier = killer
 			Flag.INSTANCE.visual.remove()
 			killer.addItem(FLAG_ID)
 			Flag.INSTANCE.visual = UnitItemInSlot(killer, 0)
-			
-		
-public function initFlag()
-	CreateTrigger()..registerAnyUnitEvent(EVENT_PLAYER_UNIT_PICKUP_ITEM)..addAction(function Flag.onPickupEvent)
-	CreateTrigger()..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DEATH)..addAction(function Flag.onDeathEvent)
+	end)
 	

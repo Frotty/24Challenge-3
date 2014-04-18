@@ -1,0 +1,49 @@
+package OEmain
+import OEbuilder
+import SpawnData
+import UnitObjEditing
+import ObjectIds
+
+// OEmain is where everything is put together
+
+
+
+@compiletime function buildUnits()
+	let spawnData = spawnData() 
+	let bob = createBuilder()
+	var buildings = ""
+	for sd in spawnData
+		let ud = new UnitDefinition(sd.id, sd.baseUnit)
+		ud.setHitPointsMaximumBase(sd.maxHP)
+		ud.setManaMaximum(sd.maxMana)
+		// only attack 1
+		ud.setAttacksEnabled(1)
+		ud.setAttack1CooldownTime(sd.attackCooldown)
+		ud.setAttack1DamageBase(sd.damageMin-1)
+		ud.setAttack1DamageNumberofDice(1)
+		ud.setAttack1DamageSidesperDie(1 + sd.damageMax - sd.damageMax)
+		// TODO attacktype
+				
+		// armor
+		// TODO ud.setDefenseType(sd.armorType castTo int)
+		ud.setDefenseBase(sd.armor)
+		ud.setGoldCost(0)
+		ud.setFoodCost(0)
+		ud.setLumberCost(0)
+		ud.setBuildTime(sd.unitBuildTime)
+		
+		// create the production building:
+		int buildingId = sd.id + 256*256*256
+		let b = new BuildingDefinition(buildingId, 'hhou') // based on farm
+		b.setGoldCost(sd.goldCost)
+		b.setLumberCost(0)
+		b.setFoodProduced(0)
+		b.setModelFile(sd.productionBuildingModel)
+		b.setScalingValue(sd.productionBuildingScale)
+		b.setBuildTime(2)
+		
+		if buildings != ""
+			buildings += ","
+		buildings += idInteger2IdString(buildingId)
+	
+	bob.setStructuresBuilt(buildings)

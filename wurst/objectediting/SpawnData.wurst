@@ -1,0 +1,61 @@
+package SpawnData
+import LinkedList
+
+// general class for storing the data of a spawned unit
+// from this, the OE data is generated, but it can also be used ingame
+
+public enum SpawnClass
+	Attacker
+	Defender
+	
+public enum ArmorType
+	Normal
+	Small
+	Medium
+	Large
+	Fortified
+	Hero
+	Divine
+	Unarmored
+	
+public enum AttackType
+	Unknown
+	Normal
+	Pierce
+	Siege
+	Spells
+	Chaos
+	Magic
+	Hero
+
+
+public class SpawnData
+	int id
+	int baseUnit
+	int maxHP = 100
+	int maxMana = 0
+	real attackCooldown = 1.3
+	int damageMin = 10
+	int damageMax = 12
+	AttackType attackType = Pierce
+	ArmorType armorType = Normal
+	int armor = 3
+	SpawnClass spawnClass = Attacker
+	string productionBuildingModel = "buildings\\human\\Farm\\Farm.mdl"
+	real productionBuildingScale = 1.0
+	int goldCost = 50
+	int unitBuildTime = 10
+	
+	construct(int id, int baseUnit)
+		this.id = id
+		this.baseUnit = baseUnit
+	
+public function spawnData() returns LinkedList<SpawnData>
+	let l = new LinkedList<SpawnData>
+	l.add(ghoul())
+	return l
+
+	
+function ghoul() returns SpawnData
+	let r = new SpawnData('xgho', 'ugho')
+	return r

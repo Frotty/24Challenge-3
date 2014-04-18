@@ -1,0 +1,19 @@
+package OEbuilder
+import UnitObjEditing
+
+// here we create the builder unit
+
+
+public constant builderID = 'hbob'
+
+public function createBuilder() returns UnitDefinition
+	let bob = new UnitDefinition(builderID, 'uaco')
+	bob.setName("Builder")
+	// restore ability, ghost, invulnerable
+	bob.setNormalAbilities("Arst,Aeth,Avul")
+	bob.setHitPointsMaximumBase(1000)
+	// disable attacks
+	bob.setAttacksEnabled(0)
+	bob.setStructuresBuilt("uzig")
+	
+	return bob

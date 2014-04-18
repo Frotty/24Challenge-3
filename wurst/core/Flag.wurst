@@ -1,17 +1,36 @@
 package Flag
 import Entity
 import MapConstants
+import initlater Round
 
 constant FLAG_ID = 'Iflg'
+constant STD_FLAG_POS = vec3(0,0,0)
 
-public class Flag
+public class Flag extends Entity
 	static thistype INSTANCE
 	item visual
 	unit carrier
 	
-	construct(vec2 pos)
+	construct()
+		super(STD_FLAG_POS, DUMMY_PLAYER)
 		visual = CreateItem(FLAG_ID, pos.x, pos.y)
+		visual.setEntity(this)
 		INSTANCE = this
+		
+	construct(vec2 pos)
+		super(pos.withZ(0.), DUMMY_PLAYER)
+		visual = CreateItem(FLAG_ID, pos.x, pos.y)
+		visual.setEntity(this)
+		INSTANCE = this
+		
+	override function update()
+		if carrier != null
+			if carrier.getTeam() == Team.RED
+				if carrier.getEntity().pos.toVec2().distToVecSquared(TEAM_RED_RITUAL) < 128*128
+					endRound(Team.RED)
+			else
+				if carrier.getEntity().pos.toVec2().distToVecSquared(TEAM_GREEN_RITUAL) < 128*128
+					endRound(Team.GREEN)
 		
 	static function onPickupEvent()
 		let carrier = GetTriggerUnit()
@@ -33,6 +52,10 @@ public class Flag
 			Flag.INSTANCE.visual.remove()
 			killer.addItem(FLAG_ID)
 			Flag.INSTANCE.visual = UnitItemInSlot(killer, 0)
+			
+	ondestroy
+		visual.remove()
+		INSTANCE = null
 			
 		
 public function initFlag()

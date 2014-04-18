@@ -1,0 +1,18 @@
+package Round
+import MapBounds
+import Statistics
+
+public function newRound()
+	clearStatistics()
+	clearArena()
+
+public function endRound()
+	
+
+	
+function clearArena()
+	GroupEnumUnitsInRect(ENUM_GROUP, mapRect, null)
+	for u in ENUM_GROUP
+		u.remove()
+		
+	ENUM_GROUP.clear()

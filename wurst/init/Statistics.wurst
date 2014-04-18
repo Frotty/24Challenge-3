@@ -1,0 +1,11 @@
+package Statistics
+
+	
+int wins_red = 0
+int wins_green = 0
+int wins_needed
+	
+
+public function clearStatistics()
+
+public function showRoundStatistics()

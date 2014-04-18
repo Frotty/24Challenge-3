@@ -1,5 +1,5 @@
 package Statistics
-
+import MapConstants
 	
 int wins_red = 0
 int wins_green = 0
@@ -8,4 +8,6 @@ int wins_needed
 
 public function clearStatistics()
 
-public function showRoundStatistics()
+public function showRoundStatistics(Team winner)
+	printTimed(winner.toString() + " won the round!\nCurrent Score: |cffFF0202RED|r : |cffFFCC00" + wins_red.toString() 
+	+ "|r|cff1FBF00GREEN|r : |cffFFCC00" + wins_green.toString() + "|r\nNext Round will start in 10 seconds", 10)

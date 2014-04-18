@@ -1,15 +1,23 @@
 package Round
 import MapBounds
+import MapConstants
 import Statistics
 import Entity
 
 public function newRound()
 	clearStatistics()
 	clearArena()
+	createBuilders()
+	adjustCamerasAndSelection()
 
-public function endRound()
+public function endRound(Team winner)
+	showRoundStatistics(winner)
+
+function adjustCamerasAndSelection()
 	
 
+function createBuilders()
+	// TODO peq
 	
 function clearArena()
 	GroupEnumUnitsInRect(ENUM_GROUP, mapRect, null)

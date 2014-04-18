@@ -5,25 +5,37 @@ import MapConstants
 constant FLAG_ID = 'Iflg'
 
 public class Flag
+	static thistype INSTANCE
 	item visual
 	unit carrier
 	
 	construct(vec2 pos)
-		CreateItem(FLAG_ID, pos.x, pos.y)
+		visual = CreateItem(FLAG_ID, pos.x, pos.y)
+		INSTANCE = this
 		
 	static function onPickupEvent()
 		let carrier = GetTriggerUnit()
 		let flag = GetManipulatedItem().getEntity()
 		
 		if flag != null
+			Flag.INSTANCE.carrier = carrier
 			if carrier.getTeam() == Team.RED
 				carrier.issuePointOrder("move", TEAM_RED_RITUAL)
 			else
 				carrier.issuePointOrder("move", TEAM_GREEN_RITUAL)
 				
 	
-	static function onDropEvent()
+	static function onDeathEvent()
+		let u = GetDyingUnit()
+		let killer = GetKillingUnit()
+		if u == Flag.INSTANCE.carrier
+			Flag.INSTANCE.carrier = killer
+			Flag.INSTANCE.visual.remove()
+			killer.addItem(FLAG_ID)
+			Flag.INSTANCE.visual = UnitItemInSlot(killer, 0)
+			
 		
 public function initFlag()
 	CreateTrigger()..registerAnyUnitEvent(EVENT_PLAYER_UNIT_PICKUP_ITEM)..addAction(function Flag.onPickupEvent)
-	CreateTrigger()..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DROP_ITEM)..addAction(function Flag.onDropEvent)
+	CreateTrigger()..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DEATH)..addAction(function Flag.onDeathEvent)
+	

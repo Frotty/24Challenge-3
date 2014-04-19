@@ -40,16 +40,22 @@ function createSpawnUnit(SpawnData sd, Race r) returns UnitDefinition
 	if r == Race.Undead
 		ud = new UnitDefinition(undeadUnitId(sd.id), sd.baseUnitUndead)
 		ud.setIconGameInterface(sd.iconUndead)
+		ud.setRace("undead")
 		name = sd.nameUndead
 	else
 		ud = new UnitDefinition(orcUnitId(sd.id), sd.baseUnitOrc)
 		ud.setIconGameInterface(sd.iconOrc)
+		ud.setRace("orc")
 		name = sd.nameOrc
 	
 	ud.setName(name)
 	ud.setTooltipBasic("Train " + name + " [" + sd.hotkey + "]")
 	ud.setTooltipExtended(sd.getExtendedDescription())
 	ud.setHotkey(sd.hotkey)
+	
+	ud.setGoldBountyAwardedBase(sd.goldCost div 10 - 1)
+	ud.setGoldBountyAwardedNumberofDice(1)
+	ud.setGoldBountyAwardedSidesperDie(1)
 	
 	// set as ward to hide the command-card
 	ud.setUnitClassification("Ward")

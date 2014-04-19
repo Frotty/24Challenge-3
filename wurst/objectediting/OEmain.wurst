@@ -70,7 +70,7 @@ function createSpawnUnit(SpawnData sd, Race r) returns UnitDefinition
 	ud.setTooltipExtended(sd.getExtendedDescription())
 	ud.setHotkey(sd.hotkey)
 	
-	ud.setGoldBountyAwardedBase(sd.goldCost div 10 - 1)
+	ud.setGoldBountyAwardedBase(sd.getCompleteGoldCost() div 10 - 1)
 	ud.setGoldBountyAwardedNumberofDice(1)
 	ud.setGoldBountyAwardedSidesperDie(1)
 	

@@ -156,7 +156,11 @@ public class SpawnData
 			+ "Damage: " + I2S(damageMin) + " - " + I2S(damageMax) + "\n"
 			+ "HP: " + I2S(maxHP) + "\n"
 
-
+	function getCompleteGoldCost() returns int
+		int dep = 0
+		if upgradedFrom != null
+			dep = upgradedFrom.getCompleteGoldCost()
+		return dep + goldCost
 
 
 	

@@ -7,20 +7,10 @@ import ObjectIds
 init
 	CreateTrigger()
 		..registerAnyUnitEvent(EVENT_PLAYER_UNIT_CONSTRUCT_FINISH)
-		..addAction(() -> begin
-		let b = GetConstructedStructure()
-
-		let sd = getSpawnData(b.getTypeId())
-
-		// income
-		let pd = b.getOwner().getPData()
-		pd.income += sd.goldCost div 10
-
-		// order the constructed building to build two units of the produced unit
-		for i = 1 to 2
-			IssueImmediateOrderById(b, orcUnitId(sd.id))
-			IssueImmediateOrderById(b, undeadUnitId(sd.id))
-	end)
+		..addAction(() -> handleConstruction(GetConstructedStructure()))
+	CreateTrigger()
+		..registerAnyUnitEvent(EVENT_PLAYER_UNIT_UPGRADE_FINISH)
+		..addAction(() -> handleConstruction(GetTriggerUnit()))
 	
 	CreateTrigger()
 		..registerAnyUnitEvent(EVENT_PLAYER_UNIT_TRAIN_FINISH)
@@ -31,6 +21,19 @@ init
 		IssueImmediateOrderById(b, trained.getTypeId())
 		aiStartControl(trained)
 	end)
+	
+function handleConstruction(unit building)
+	let b = building
+	let sd = getSpawnData(b.getTypeId())
+
+	// income
+	let pd = b.getOwner().getPData()
+	pd.income += sd.goldCost div 10
+
+	// order the constructed building to build two units of the produced unit
+	for i = 1 to 2
+		IssueImmediateOrderById(b, orcUnitId(sd.id))
+		IssueImmediateOrderById(b, undeadUnitId(sd.id))
 	
 /** control what this unit should do after it has been trained */
 function aiStartControl(unit u)

@@ -123,7 +123,7 @@ public class SpawnData
 	int maxHP = 100
 	int maxMana = 0
 	real attackCooldown = 1.3
-	int movespeed
+	int movespeed = 250
 	int damageMin = 10
 	int damageMax = 12
 	AttackType attackType = Pierce
@@ -146,7 +146,7 @@ public class SpawnData
 		this.nameUndead = nameUndead
 
 	/** override this callback if you want to change other fields of the unit */ 
-	function additionalChanges(UnitDefinition ud, Race r)
+	function additionalChanges(UnitDefinition _ud, Race _r)
 		
 	/** generate a nice description of this unit and its stats .... */
 	function getExtendedDescription() returns string
@@ -163,6 +163,7 @@ public function spawnData() returns LinkedList<SpawnData>
 	l.add(new Ghoul)
 	l.add(new Archer)
 	l.add(new NoviceCaster)
+	l.add(new Tank)
 	return l
 
 // here are the different unit classes.

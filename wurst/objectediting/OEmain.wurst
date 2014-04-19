@@ -60,12 +60,18 @@ function createSpawnUnit(SpawnData sd, Race r) returns UnitDefinition
 	// set as ward to hide the command-card
 	ud.setUnitClassification("Ward")
 	
+	// no tech tech requirements
+	ud.setRequirements("")
+	
+	
 	// TODO further abilities
 	ud.setNormalAbilities("AInv")	
 	
 	ud.setHitPointsMaximumBase(sd.maxHP)
 	ud.setManaMaximum(sd.maxMana)
-	
+	ud.setSpeedBase(sd.movespeed)
+	ud.setSpeedMinimum(0)
+	ud.setSpeedMaximum(sd.movespeed)
 	
 	// only attack 1
 	ud.setAttacksEnabled(1)

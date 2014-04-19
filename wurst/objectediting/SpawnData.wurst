@@ -161,8 +161,12 @@ public function undeadBuildingId(int baseId) returns int
 	
 public function spawnData() returns LinkedList<SpawnData>
 	let l = new LinkedList<SpawnData>
-	l.add(new Ghoul())
+	l.add(new Ghoul)
+	l.add(new Archer)
 	return l
+
+// here are the different unit classes.
+// the name of the class is always the unit name of the undeads
 
 class Ghoul extends SpawnData
 	construct()
@@ -178,3 +182,17 @@ class Ghoul extends SpawnData
 		attackType = Normal
 		range = 90
 
+class Archer extends SpawnData
+	construct()
+		super('0arc', 'nska', "Skeleton Archer", 'ohun', "Troll Spearthrower")
+		productionBuildingModelUndead = "buildings\\other\\NerubianZiggurat\\NerubianZiggurat.mdl"
+		productionBuildingModelOrc = "buildings\\orc\\WatchTower\\WatchTower.mdl"
+		iconOrc = "ReplaceableTextures\\CommandButtons\\BTNHeadhunter.blp"
+		iconUndead = "ReplaceableTextures\\CommandButtons\\BTNSkeletonArcher.blp"
+		
+		description = "An agressive ranged unit."
+		hotkey = "W"
+		armorType = Normal
+		attackType = Pierce
+		range = 500
+		goldCost = 60

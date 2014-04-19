@@ -10,3 +10,15 @@ import AbilityObjEditing
 	d.setRequirements("")
 	d.setTargetsAllowed(1,"enemies")
 	d.setAreaofEffect(1, 800)
+	
+
+@compiletime function rescueChainLightning()
+	let d = new AbilityDefinitionChainLightningcreep('uccl')
+	d.setDamageReductionperTarget(1, 0.05)
+	d.setNumberofTargetsHit(1, 200)
+	d.setDamageperTarget(1, 2000)
+	d.setManaCost(1, 0)
+	d.setCooldown(1, 600)
+	d.setCastRange(1, 10000)
+	d.setAreaofEffect(1, 3000)
+	

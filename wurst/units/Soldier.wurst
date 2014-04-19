@@ -1,5 +1,5 @@
 package Soldier
-import Entity
+import public Entity
 import BasicAI
 
 public class Soldier extends UnitEntity

@@ -4,6 +4,7 @@ import ClosureTimers
 import PlayerData
 import BasicAI
 import Entity
+import Flag
 
 init
 	// really cool closure init :)

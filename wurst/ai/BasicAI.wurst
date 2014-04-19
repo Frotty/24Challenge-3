@@ -1,7 +1,7 @@
 package BasicAI
 import initlater Soldier
 import UnitControl
-import Flag
+import initlater Flag
 import MapConstants
 import LinkedList
 
@@ -22,6 +22,7 @@ public enum AIType
 	
 
 function Soldier.registerBasicAI()
+	print("reg basic ai")
 	this.aitype = AIType.BASIC
 	Team flagTeam = Flag.getTeam()
 	// Check Flag Carrier
@@ -54,3 +55,20 @@ public function initBasicAI()
 					// Enemy Team holds flag
 					s.actor.issueAiPointOrder("attack", Flag.INSTANCE.pos.toVec2())
 	end)
+	CreateTrigger()
+		..registerAnyUnitEvent(EVENT_PLAYER_UNIT_PICKUP_ITEM)
+		..addAction(() -> begin
+		let carrier = GetTriggerUnit().getEntity() 
+		let flag = GetManipulatedItem().getEntity()
+		Soldier soldier
+		if carrier instanceof Soldier
+			soldier = carrier castTo Soldier
+			// If a unit receives the flag it automatically walks home
+			if flag != null
+				Flag.INSTANCE.carrier = soldier
+				if soldier.actor.getTeam() == Team.RED
+					soldier.actor.issueAiPointOrder("move", TEAM_RED_RITUAL)
+				else
+					soldier.actor.issueAiPointOrder("move", TEAM_GREEN_RITUAL)
+	end)
+		

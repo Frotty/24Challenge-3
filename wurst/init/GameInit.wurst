@@ -5,19 +5,15 @@ import PlayerData
 import BasicAI
 import Entity
 import Flag
+import Board
 
 init
 	// really cool closure init :)
 	doAfter(0.01, () -> begin
-		print("1")
 		initPlayers()
-		print("2")
 		initBasicAI()
-		print("3")
 		initFlag()
-		print("3.1")
+		initBoard()
 		startEntityLoop()
-		print("4")
 		newRound()
-		print("5")
 	end)

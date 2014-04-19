@@ -26,13 +26,19 @@ function Soldier.registerBasicAI()
 	this.aitype = AIType.BASIC
 	Team flagTeam = Flag.getTeam()
 	// Check Flag Carrier
+	print("flag check")
 	if this.actor.getTeam() == flagTeam
 		// Allied Team holds flag
 		this.actor.issueAiPointOrder("move", Flag.INSTANCE.pos.toVec2())
 	else
+		print("flag not allied")
 		if flagTeam == Team.DUMMY
 			// Flag on Ground
+			print("flag on Ground")
+			if Flag.INSTANCE.visual == null
+				print("DAFUUUUUUUUUUUUUQ")
 			this.actor.issueAiTargetOrder("smart", Flag.INSTANCE.visual)
+			print("flag ordered")
 		else
 			// Enemy Team holds flag
 			this.actor.issueAiPointOrder("attack", Flag.INSTANCE.pos.toVec2())

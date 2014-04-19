@@ -14,6 +14,7 @@ public function unit.issueAiPointOrder(string order, vec2 target)
 			..issue(this))
 			
 public function unit.issueAiTargetOrder(string order, widget target)
+	print("set order")
 	setLastOrder(this, 
 		new TargetOrder(OrderId(order), target)
 			..issue(this))
@@ -75,4 +76,7 @@ class TargetOrder extends Order
 		this.target = target
 	
 	override function issueIntern(unit u)
+		print("issued intern")
 		IssueTargetOrderById(u, orderId, target)
+		print("issued intern done")
+	

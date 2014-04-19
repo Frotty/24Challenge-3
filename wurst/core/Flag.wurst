@@ -18,6 +18,7 @@ public class Flag extends Entity
 		visual = CreateItem(FLAG_ID, pos.x, pos.y)
 		visual.setEntity(this)
 		INSTANCE = this
+		print("flagh create")
 		
 	construct(vec2 pos)
 		super(pos.withZ(0.), DUMMY_PLAYER)

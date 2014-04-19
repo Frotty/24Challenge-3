@@ -7,5 +7,5 @@ public class Soldier extends UnitEntity
 	
 	construct(unit u)
 		super(u)
-		registerAI(AIType.BASIC)
+		this.registerAI(AIType.BASIC)
 		

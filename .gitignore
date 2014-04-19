@@ -1,2 +1,6 @@
 *.j
 wurst.dependencies
+*.w3o
+*.w3t
+*.w3u
+*.txt

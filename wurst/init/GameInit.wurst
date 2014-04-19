@@ -9,8 +9,14 @@ import Flag
 init
 	// really cool closure init :)
 	doAfter(0.01, () -> begin
+		print("1")
 		initPlayers()
+		print("2")
 		initBasicAI()
+		print("3")
+		initFlag()
 		startEntityLoop()
+		print("4")
 		newRound()
+		print("5")
 	end)

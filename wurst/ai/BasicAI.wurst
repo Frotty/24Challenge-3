@@ -22,23 +22,17 @@ public enum AIType
 	
 
 function Soldier.registerBasicAI()
-	print("reg basic ai")
 	this.aitype = AIType.BASIC
+	soldiers.add(this)
 	Team flagTeam = Flag.getTeam()
 	// Check Flag Carrier
-	print("flag check")
-	if this.actor.getTeam() == flagTeam
+	if this.getTeam() == flagTeam
 		// Allied Team holds flag
-		this.actor.issueAiPointOrder("move", Flag.INSTANCE.pos.toVec2())
+		this.actor.issueAiPointOrder("attack", Flag.INSTANCE.pos.toVec2())
 	else
-		print("flag not allied")
 		if flagTeam == Team.DUMMY
 			// Flag on Ground
-			print("flag on Ground")
-			if Flag.INSTANCE.visual == null
-				print("DAFUUUUUUUUUUUUUQ")
 			this.actor.issueAiTargetOrder("smart", Flag.INSTANCE.visual)
-			print("flag ordered")
 		else
 			// Enemy Team holds flag
 			this.actor.issueAiPointOrder("attack", Flag.INSTANCE.pos.toVec2())
@@ -49,17 +43,18 @@ public function initBasicAI()
 		.startPeriodic(AI_UPDATE_PERIOD, () -> begin
 		Team flagTeam = Flag.getTeam()
 		for s in soldiers
-			// Check Flag Carrier
-			if s.actor.getTeam() == flagTeam
-				// Allied Team holds flag
-				s.actor.issueAiPointOrder("move", Flag.INSTANCE.pos.toVec2())
-			else
-				if flagTeam == Team.DUMMY
-					// Flag on Ground
-					s.actor.issueAiTargetOrder("smart", Flag.INSTANCE.visual)
-				else
-					// Enemy Team holds flag
+			if s != Flag.INSTANCE.carrier
+				// Check Flag Carrier
+				if s.actor.getTeam() == flagTeam
+					// Allied Team holds flag
 					s.actor.issueAiPointOrder("attack", Flag.INSTANCE.pos.toVec2())
+				else
+					if flagTeam == Team.DUMMY
+						// Flag on Ground
+						s.actor.issueAiTargetOrder("smart", Flag.INSTANCE.visual)
+					else
+						// Enemy Team holds flag
+						s.actor.issueAiPointOrder("attack", Flag.INSTANCE.pos.toVec2())
 	end)
 	CreateTrigger()
 		..registerAnyUnitEvent(EVENT_PLAYER_UNIT_PICKUP_ITEM)
@@ -76,5 +71,6 @@ public function initBasicAI()
 					soldier.actor.issueAiPointOrder("move", TEAM_RED_RITUAL)
 				else
 					soldier.actor.issueAiPointOrder("move", TEAM_GREEN_RITUAL)
+				printTimed(soldier.getTeam().toString() + " picked up the flag!", 5)
 	end)
 		

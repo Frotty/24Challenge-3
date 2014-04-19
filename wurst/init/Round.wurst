@@ -12,14 +12,18 @@ import Income
 
 public function newRound()
 	clearStatistics()
-	clearArena()
+	//clearArena()
 	createBuilders()
 	renewPlayers()
 	startIncome()
 	new Flag()
 
 public function endRound(Team winner)
-	showRoundStatistics(winner)
+	destroy Flag.INSTANCE
+	if showRoundStatistics(winner)
+		// TODO end game
+	else
+		getTimer().start(10, function newRound)
 
 	
 

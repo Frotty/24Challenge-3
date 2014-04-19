@@ -30,6 +30,7 @@ public class Flag extends Entity
 	// Check if Sheep inside ritualbase
 	override function update()
 		if carrier != null
+			pos = carrier.actor.getPos3fake()
 			if carrier.getTeam() == Team.RED
 				if carrier.pos.toVec2().distToVecSquared(TEAM_RED_RITUAL) < 128*128
 					endRound(Team.RED)

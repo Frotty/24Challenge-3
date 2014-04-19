@@ -15,6 +15,7 @@ init
 		initBasicAI()
 		print("3")
 		initFlag()
+		print("3.1")
 		startEntityLoop()
 		print("4")
 		newRound()

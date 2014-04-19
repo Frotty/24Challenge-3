@@ -115,6 +115,7 @@ public class SpawnData
 	int maxHP = 100
 	int maxMana = 0
 	real attackCooldown = 1.3
+	int movespeed
 	int damageMin = 10
 	int damageMax = 12
 	AttackType attackType = Pierce
@@ -196,3 +197,19 @@ class Archer extends SpawnData
 		attackType = Pierce
 		range = 500
 		goldCost = 60
+		
+class Tank extends SpawnData
+	construct()
+		super('0tan', 'uabo', "Abomination", 'otau', "Tauren")
+		productionBuildingModelUndead = "buildings\\other\\NerubianZiggurat\\NerubianZiggurat.mdl"
+		productionBuildingModelOrc = "buildings\\orc\\WatchTower\\WatchTower.mdl"
+		iconOrc = "ReplaceableTextures\\CommandButtons\\BTNAbomination.blp"
+		iconUndead = "ReplaceableTextures\\CommandButtons\\BTNTauren.blp"
+		
+		description = "An agressive ranged unit."
+		hotkey = "W"
+		armorType = Large
+		attackType = Normal
+		range = 120
+		movespeed = 120
+		goldCost = 120

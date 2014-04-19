@@ -99,13 +99,15 @@ function createSpawnProductionBuilding(SpawnData sd, Race r) returns BuildingDef
 	string name
 	if r == Race.Undead
 		b = new BuildingDefinition(undeadBuildingId(sd.id), 'hhou') // based on farm
+		b.setRace("undead")
 		name = sd.nameUndead
 		b.setIconGameInterface(sd.iconUndead)
 		b.setModelFile(sd.productionBuildingModelUndead)
 		b.setScalingValue(sd.productionBuildingScaleUndead)
 		b.setUnitsTrained(idInteger2IdString(undeadUnitId(sd.id)))
 	else
-		b = new BuildingDefinition(orcBuildingId(sd.id), 'hhou') // based on farm 
+		b = new BuildingDefinition(orcBuildingId(sd.id), 'hhou') // based on farm
+		b.setRace("orc") 
 		name = sd.nameOrc
 		b.setIconGameInterface(sd.iconOrc)
 		b.setModelFile(sd.productionBuildingModelOrc)

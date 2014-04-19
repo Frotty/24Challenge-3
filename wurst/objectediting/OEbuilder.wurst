@@ -12,8 +12,10 @@ public function createBuilder(Race r) returns UnitDefinition
 	UnitDefinition bob
 	if r == Race.Undead
 		bob = new UnitDefinition(builderIDundead, 'uaco')
+		bob.setRace("undead")
 	else
 		bob = new UnitDefinition(builderIDorc, 'uaco')
+		bob.setRace("orc")
 		bob.setModelFile("units\\orc\\Peon\\Peon.mdl")
 		bob.setIconGameInterface("ReplaceableTextures\\CommandButtons\\BTNPeon.blp")
 	bob.setName("Builder")

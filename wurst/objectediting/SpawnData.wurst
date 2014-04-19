@@ -204,6 +204,9 @@ class Ghoul extends SpawnData
 		range = 90
 		goldCost = 40
 		unitBuildTime = 40
+		maxHP = 300
+		damageMin = 20
+		mamageMax = 30
 
 class Archer extends SpawnData
 	construct()

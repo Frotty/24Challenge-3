@@ -12,6 +12,11 @@ public function unit.issueAiPointOrder(string order, vec2 target)
 	setLastOrder(this, 
 		new PointOrder(OrderId(order), target)
 			..issue(this))
+			
+public function unit.issueAiTargetOrder(string order, widget target)
+	setLastOrder(this, 
+		new TargetOrder(OrderId(order), target)
+			..issue(this))
 
 init
 	// point oders:
@@ -61,3 +66,13 @@ class PointOrder extends Order
 	override function issueIntern(unit u)
 		IssuePointOrderById(u, orderId, target.x, target.y)
 		
+class TargetOrder extends Order
+	int orderId
+	widget target
+	
+	construct(int orderId, widget target)
+		this.orderId = orderId
+		this.target = target
+	
+	override function issueIntern(unit u)
+		IssueTargetOrderById(u, orderId, target)

@@ -1,0 +1,74 @@
+package BasicAI
+import initlater Soldier
+import UnitControl
+import initlater Flag
+import MapConstants
+import LinkedList
+
+constant AI_UPDATE_PERIOD = 5.
+
+LinkedList<Soldier> soldiers = new LinkedList<Soldier>()
+
+public function Soldier.registerAI(AIType aitype)
+	switch aitype
+		case AIType.NONE
+			//nothing
+		case AIType.BASIC
+			this.registerBasicAI()
+
+public enum AIType
+	NONE
+	BASIC
+	
+
+function Soldier.registerBasicAI()
+	print("reg basic ai")
+	this.aitype = AIType.BASIC
+	Team flagTeam = Flag.getTeam()
+	// Check Flag Carrier
+	if this.actor.getTeam() == flagTeam
+		// Allied Team holds flag
+		this.actor.issueAiPointOrder("move", Flag.INSTANCE.pos.toVec2())
+	else
+		if flagTeam == Team.DUMMY
+			// Flag on Ground
+			this.actor.issueAiTargetOrder("smart", Flag.INSTANCE.visual)
+		else
+			// Enemy Team holds flag
+			this.actor.issueAiPointOrder("attack", Flag.INSTANCE.pos.toVec2())
+
+
+public function initBasicAI()
+	CreateTimer()
+		.startPeriodic(AI_UPDATE_PERIOD, () -> begin
+		Team flagTeam = Flag.getTeam()
+		for s in soldiers
+			// Check Flag Carrier
+			if s.actor.getTeam() == flagTeam
+				// Allied Team holds flag
+				s.actor.issueAiPointOrder("move", Flag.INSTANCE.pos.toVec2())
+			else
+				if flagTeam == Team.DUMMY
+					// Flag on Ground
+					s.actor.issueAiTargetOrder("smart", Flag.INSTANCE.visual)
+				else
+					// Enemy Team holds flag
+					s.actor.issueAiPointOrder("attack", Flag.INSTANCE.pos.toVec2())
+	end)
+	CreateTrigger()
+		..registerAnyUnitEvent(EVENT_PLAYER_UNIT_PICKUP_ITEM)
+		..addAction(() -> begin
+		let carrier = GetTriggerUnit().getEntity() 
+		let flag = GetManipulatedItem().getEntity()
+		Soldier soldier
+		if carrier instanceof Soldier
+			soldier = carrier castTo Soldier
+			// If a unit receives the flag it automatically walks home
+			if flag != null
+				Flag.INSTANCE.carrier = soldier
+				if soldier.actor.getTeam() == Team.RED
+					soldier.actor.issueAiPointOrder("move", TEAM_RED_RITUAL)
+				else
+					soldier.actor.issueAiPointOrder("move", TEAM_GREEN_RITUAL)
+	end)
+		

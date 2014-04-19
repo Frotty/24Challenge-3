@@ -1,5 +1,5 @@
 package Flag
-import Entity
+import Soldier
 import MapConstants
 import initlater Round
 
@@ -11,7 +11,7 @@ constant STD_FLAG_POS = (0.5*(TEAM_GREEN_RITUAL + TEAM_RED_RITUAL)).withZ(0)
 public class Flag extends Entity
 	static thistype INSTANCE
 	item visual
-	unit carrier
+	Soldier carrier
 	
 	construct()
 		super(STD_FLAG_POS, DUMMY_PLAYER)
@@ -25,15 +25,22 @@ public class Flag extends Entity
 		visual.setEntity(this)
 		INSTANCE = this
 		
+		
 	// Check if Sheep inside ritualbase
 	override function update()
 		if carrier != null
 			if carrier.getTeam() == Team.RED
-				if carrier.getEntity().pos.toVec2().distToVecSquared(TEAM_RED_RITUAL) < 128*128
+				if carrier.pos.toVec2().distToVecSquared(TEAM_RED_RITUAL) < 128*128
 					endRound(Team.RED)
 			else
-				if carrier.getEntity().pos.toVec2().distToVecSquared(TEAM_GREEN_RITUAL) < 128*128
+				if carrier.pos.toVec2().distToVecSquared(TEAM_GREEN_RITUAL) < 128*128
 					endRound(Team.GREEN)
+			
+	static function getTeam() returns Team
+		if INSTANCE.carrier != null
+			return INSTANCE.carrier.getTeam()
+		else
+			return Team.DUMMY
 			
 	ondestroy
 		visual.remove()
@@ -42,30 +49,16 @@ public class Flag extends Entity
 		
 public function initFlag()
 	CreateTrigger()
-		..registerAnyUnitEvent(EVENT_PLAYER_UNIT_PICKUP_ITEM)
-		..addAction(() -> begin
-		let carrier = GetTriggerUnit()
-		let flag = GetManipulatedItem().getEntity()
-		// If a unit receives the flag it automatically walks home
-		if flag != null
-			Flag.INSTANCE.carrier = carrier
-			if carrier.getTeam() == Team.RED
-				carrier.issuePointOrder("move", TEAM_RED_RITUAL)
-			else
-				carrier.issuePointOrder("move", TEAM_GREEN_RITUAL)
-				
-			
-	end)
-	CreateTrigger()
 		..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DEATH)
 		..addAction(() -> begin
-		let u = GetDyingUnit()
-		let killer = GetKillingUnit()
-		if u == Flag.INSTANCE.carrier
+		let u = GetDyingUnit().getEntity()
+		let killer = GetKillingUnit().getEntity()
+		if u == Flag.INSTANCE.carrier and killer instanceof Soldier
+			let soldier = killer castTo Soldier
 			// Transfer Flag to Killer
-			Flag.INSTANCE.carrier = killer
+			Flag.INSTANCE.carrier = soldier
 			Flag.INSTANCE.visual.remove()
-			killer.addItem(FLAG_ID)
-			Flag.INSTANCE.visual = UnitItemInSlot(killer, 0)
+			soldier.actor.addItem(FLAG_ID)
+			Flag.INSTANCE.visual = UnitItemInSlot(soldier.actor, 0)
 	end)
 	

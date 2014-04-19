@@ -1,6 +1,7 @@
 package MapConstants
 
 public enum Team
+	DUMMY
 	RED
 	GREEN
 	
@@ -19,3 +20,5 @@ public function unit.getTeam() returns Team
 		return Team.RED
 	else
 		return Team.GREEN
+		
+

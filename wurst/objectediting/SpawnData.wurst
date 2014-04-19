@@ -127,6 +127,7 @@ public class SpawnData
 	real productionBuildingScaleUndead = 0.7
 	int goldCost = 50
 	int unitBuildTime = 10
+	int range = 100
 	
 	construct(int id, int baseUnitUndead, string nameUndead, int baseUnitOrc, string nameOrc)
 		this.id = id
@@ -168,6 +169,12 @@ class Ghoul extends SpawnData
 		super('0gho', 'ugho', "Ghoul", 'ogru', "Grunt")
 		productionBuildingModelUndead = "buildings\\undead\\Crypt\\Crypt.mdl"
 		productionBuildingModelOrc = "buildings\\orc\\OrcBarracks\\OrcBarracks.mdl"
-		description = "Ghouls are cheap and weak mealee units."
+		iconOrc = "ReplaceableTextures\\CommandButtons\\BTNGrunt.blp"
+		iconUndead = "ReplaceableTextures\\CommandButtons\\BTNGhoul.blp"
+		
+		description = "A cheap and weak mealee unit."
 		hotkey = "Q"
-			
+		armorType = Large
+		attackType = Normal
+		range = 90
+

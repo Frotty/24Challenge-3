@@ -54,9 +54,11 @@ function createSpawnUnit(SpawnData sd, Race r) returns UnitDefinition
 	// set as ward to hide the command-card
 	ud.setUnitClassification("Ward")
 	
+	// TODO further abilities
+	ud.setNormalAbilities("AInv")	
+	
 	ud.setHitPointsMaximumBase(sd.maxHP)
 	ud.setManaMaximum(sd.maxMana)
-	ud.setNormalAbilities("")
 	
 	
 	// only attack 1
@@ -66,6 +68,7 @@ function createSpawnUnit(SpawnData sd, Race r) returns UnitDefinition
 	ud.setAttack1DamageNumberofDice(1)
 	ud.setAttack1DamageSidesperDie(1 + sd.damageMax - sd.damageMin)
 	ud.setAttack1AttackType(sd.attackType.toObjectString())
+	ud.setAttack1Range(sd.range)
 			
 	// armor
 	ud.setDefenseType(sd.armorType.toObjectString())

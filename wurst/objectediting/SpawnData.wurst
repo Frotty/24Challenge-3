@@ -136,7 +136,7 @@ public class SpawnData
 	string productionBuildingModelUndead = "buildings\\human\\Farm\\Farm.mdl"
 	real productionBuildingScaleUndead = 0.7
 	int goldCost = 50
-	int unitBuildTime = 30
+	int unitBuildTime = 50
 	int range = 100
 	string abilities = ""
 	
@@ -154,7 +154,12 @@ public class SpawnData
 	function getExtendedDescription() returns string
 		return "|cffeeeeee" + description + "|r\n\n"
 			+ "Damage: " + I2S(damageMin) + " - " + I2S(damageMax) + "\n"
+			+ "Cooldown: " + R2S(attackCooldown) + "\n"
 			+ "HP: " + I2S(maxHP) + "\n"
+			+ "Armor: " + I2S(armor) + "\n"
+			+ "Attacktype: " + attackType.toObjectString() + "\n"
+			+ "Armortype: " + armorType.toObjectString() + "\n"
+			+ "Production time: " + I2S(unitBuildTime) + "\n"
 
 	function getCompleteGoldCost() returns int
 		int dep = 0
@@ -197,6 +202,8 @@ class Ghoul extends SpawnData
 		armorType = Large
 		attackType = Normal
 		range = 90
+		goldCost = 40
+		unitBuildTime = 40
 
 class Archer extends SpawnData
 	construct()
@@ -261,10 +268,10 @@ class NoviceCaster extends SpawnData
 		armorType = ArmorType.Unarmored
 		attackType = AttackType.Magic
 		range = 500
-		goldCost = 65
+		goldCost = 100
 		attackCooldown = 1.2
-		damageMin = 15
-		damageMax = 18
+		damageMin = 11
+		damageMax = 14
 		
 	override function additionalChanges(UnitDefinition ud, Race r)
 		if r == Race.Undead
@@ -280,8 +287,8 @@ class Tank extends SpawnData
 		super('0tan', 'uabo', "Abomination", 'otau', "Tauren")
 		productionBuildingModelUndead = "buildings\\other\\NerubianZiggurat\\NerubianZiggurat.mdl"
 		productionBuildingModelOrc = "buildings\\orc\\WatchTower\\WatchTower.mdl"
-		iconOrc = "ReplaceableTextures\\CommandButtons\\BTNAbomination.blp"
-		iconUndead = "ReplaceableTextures\\CommandButtons\\BTNTauren.blp"
+		iconOrc = "ReplaceableTextures\\CommandButtons\\BTNTauren.blp"
+		iconUndead = "ReplaceableTextures\\CommandButtons\\BTNAbomination.blp"
 		
 		description = "A tank with a lot of hit points."
 		hotkey = "R"
@@ -292,5 +299,5 @@ class Tank extends SpawnData
 		goldCost = 120
 		maxHP = 1000
 		armor = 15
-		unitBuildTime = 50
+		unitBuildTime = 200
 

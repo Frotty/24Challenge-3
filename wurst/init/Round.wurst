@@ -32,7 +32,11 @@ function createBuilders()
 		count++
 		
 function clearItems()
-	destroy GetEnumItem().getEntity()
+	let e = GetEnumItem().getEntity()
+	if  e != null
+		destroy e
+	else
+		GetEnumItem().remove()
 	
 function clearArena()
 	GroupEnumUnitsInRect(ENUM_GROUP, mapRect, null)

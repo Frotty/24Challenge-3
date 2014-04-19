@@ -1,0 +1,11 @@
+package Soldier
+import Entity
+import BasicAI
+
+public class Soldier extends UnitEntity
+	AIType aitype = AIType.NONE
+	
+	construct(unit u)
+		super(u)
+		registerAI(AIType.BASIC)
+		

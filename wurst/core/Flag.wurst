@@ -25,6 +25,7 @@ public class Flag extends Entity
 		visual.setEntity(this)
 		INSTANCE = this
 		
+		
 	// Check if Sheep inside ritualbase
 	override function update()
 		if carrier != null
@@ -34,6 +35,12 @@ public class Flag extends Entity
 			else
 				if carrier.getEntity().pos.toVec2().distToVecSquared(TEAM_GREEN_RITUAL) < 128*128
 					endRound(Team.GREEN)
+			
+	static function getTeam() returns Team
+		if INSTANCE.carrier != null
+			return INSTANCE.carrier.getTeam()
+		else
+			return Team.DUMMY
 			
 	ondestroy
 		visual.remove()

@@ -1,6 +1,7 @@
 package MapConstants
 
 public enum Team
+	DUMMY
 	RED
 	GREEN
 	

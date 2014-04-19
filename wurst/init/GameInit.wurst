@@ -2,10 +2,14 @@ package GameInit
 import Round
 import ClosureTimers
 import PlayerData
+import BasicAI
+import Entity
 
 init
 	// really cool closure init :)
 	doAfter(0.01, () -> begin
 		initPlayers()
+		initBasicAI()
+		startEntityLoop()
 		newRound()
 	end)

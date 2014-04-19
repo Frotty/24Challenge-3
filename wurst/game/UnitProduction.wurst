@@ -1,5 +1,6 @@
 package UnitProduction
 import UnitControl
+import Soldier
 
 init
 	CreateTrigger()
@@ -24,5 +25,5 @@ init
 	
 /** control what this unit should do after it has been trained */
 function aiStartControl(unit u)
-	// TODO frotty make this smarter :)
-	u.issueAiPointOrder("attack", vec2(0,0))
+	new Soldier(u)
+	

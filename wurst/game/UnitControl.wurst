@@ -1,0 +1,63 @@
+package UnitControl
+import ClosureTimers
+import SpawnData
+
+boolean isTriggerOrder = false
+
+/** lastOrder of the unit, index is the unit userdata */
+Order array lastOrder
+
+
+public function unit.issueAiPointOrder(string order, vec2 target)
+	setLastOrder(this, 
+		new PointOrder(OrderId(order), target)
+			..issue(this))
+
+init
+	// point oders:
+	CreateTrigger()
+		..registerAnyUnitEvent(EVENT_PLAYER_UNIT_ISSUED_ORDER)
+		..registerAnyUnitEvent(EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER)
+		..registerAnyUnitEvent(EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER)
+		..addAction(() -> begin
+		if not isTriggerOrder
+			let u = GetTriggerUnit() 
+			if u.isSpawnUnit()
+				reissueLastTriggerOrder(u)
+	end)
+
+function setLastOrder(unit u, Order o)
+	let id = u.getUserData()
+	if lastOrder[id] != null
+		destroy lastOrder[id]
+	lastOrder[id] = o
+	
+function reissueLastTriggerOrder(unit _u)
+	doAfter(0., () -> begin
+		let l = lastOrder[_u.getUserData()]
+		if l != null
+			isTriggerOrder = true
+			l.issue(_u)
+			isTriggerOrder = false
+	end)
+	
+abstract class Order
+	function issue(unit u)
+		isTriggerOrder = true
+		issueIntern(u)
+		isTriggerOrder = false
+		
+
+	abstract function issueIntern(unit u)
+	
+class PointOrder extends Order
+	int orderId
+	vec2 target
+	
+	construct(int orderId, vec2 target)
+		this.orderId = orderId
+		this.target = target
+	
+	override function issueIntern(unit u)
+		IssuePointOrderById(u, orderId, target.x, target.y)
+		

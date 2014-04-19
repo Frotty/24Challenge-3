@@ -10,8 +10,8 @@ public function Team.toString() returns string
 	else
 		return "Team |cff1FBF00GREEN|r"
 
-public constant TEAM_RED_RITUAL = vec2(0,0)
-public constant TEAM_GREEN_RITUAL = vec2(0,0)
+public constant TEAM_RED_RITUAL = vec2(-3840,3840)
+public constant TEAM_GREEN_RITUAL = vec2(4350,-4350)
 
 public function unit.getTeam() returns Team
 	let id = this.getOwner().getId()

@@ -1,4 +1,5 @@
 package UnitProduction
+import UnitControl
 
 init
 	CreateTrigger()
@@ -24,4 +25,4 @@ init
 /** control what this unit should do after it has been trained */
 function aiStartControl(unit u)
 	// TODO frotty make this smarter :)
-	IssuePointOrder(u, "attack", 0, 0)
+	u.issueAiPointOrder("attack", vec2(0,0))

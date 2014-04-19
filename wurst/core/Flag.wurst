@@ -4,7 +4,8 @@ import MapConstants
 import initlater Round
 
 constant FLAG_ID = 'Iflg'
-constant STD_FLAG_POS = vec3(0,0,0)
+// the flag position is exactly in the center between red and green ritual:
+constant STD_FLAG_POS = (0.5*(TEAM_GREEN_RITUAL + TEAM_RED_RITUAL)).withZ(0)
 
 // Sheep that is needed for the ritual
 public class Flag extends Entity

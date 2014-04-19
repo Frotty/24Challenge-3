@@ -24,6 +24,9 @@ public function unit.getSpawnData() returns SpawnData
 public function unit.getSpawnDataForBuilding() returns SpawnData
 	return unitIdToSpawnData.get(this.getTypeId() - 256*256*256)
 
+public function unit.isSpawnUnit() returns boolean
+	return this.getSpawnData() != null
+
 
 public enum SpawnClass
 	Attacker

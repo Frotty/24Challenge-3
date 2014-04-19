@@ -20,6 +20,10 @@ import ObjectIds
 		ud.setTooltipExtended(sd.getExtendedDescription())
 		ud.setHotkey(sd.hotkey)
 		
+		// set as ward to hide the command-card
+//		ud.setTargetedAs("ward")
+		ud.setUnitClassification("Ward")
+		
 		ud.setHitPointsMaximumBase(sd.maxHP)
 		ud.setManaMaximum(sd.maxMana)
 		ud.setNormalAbilities("")

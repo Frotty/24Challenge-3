@@ -1,6 +1,8 @@
 package UnitProduction
-import UnitControl
 import Soldier
+import PlayerData
+import SpawnData
+import ObjectIds
 
 init
 	CreateTrigger()
@@ -8,9 +10,16 @@ init
 		..addAction(() -> begin
 		let b = GetConstructedStructure()
 
+		let sd = getSpawnData(b.getTypeId())
+
+		// income
+		let pd = b.getOwner().getPData()
+		pd.income += sd.goldCost div 10
+
 		// order the constructed building to build two units of the produced unit
 		for i = 1 to 2
-			IssueImmediateOrderById(b, b.getTypeId() - 256*256*256)
+			IssueImmediateOrderById(b, orcUnitId(sd.id))
+			IssueImmediateOrderById(b, undeadUnitId(sd.id))
 	end)
 	
 	CreateTrigger()

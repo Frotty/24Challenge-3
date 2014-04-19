@@ -23,13 +23,21 @@ public function getSpawnData(int unitId) returns SpawnData
 	let firstLetter = unitId div (256*256*256)
 	return unitIdToSpawnData.get(unitId + 256*256*256*('0' - firstLetter))
 	
-public function unit.getSpawnDataForBuilding() returns SpawnData
-	return unitIdToSpawnData.get(this.getTypeId() - 256*256*256)
-
 public function unit.isSpawnUnit() returns boolean
 	let firstLetter = this.getTypeId() div (256*256*256)
 	return firstLetter == 'a' or firstLetter == 'c'
 
+public function orcUnitId(int baseId) returns int
+	return baseId + 256*256*256*('a'-'0')
+
+public function orcBuildingId(int baseId) returns int
+	return baseId + 256*256*256*('b'-'0')
+	
+public function undeadUnitId(int baseId) returns int
+	return baseId + 256*256*256*('c'-'0')
+	
+public function undeadBuildingId(int baseId) returns int
+	return baseId + 256*256*256*('d'-'0')
 
 public enum SpawnClass
 	Attacker
@@ -146,17 +154,7 @@ public class SpawnData
 			+ "HP: " + I2S(maxHP) + "\n"
 
 
-public function orcUnitId(int baseId) returns int
-	return baseId + 256*256*256*('a'-'0')
 
-public function orcBuildingId(int baseId) returns int
-	return baseId + 256*256*256*('b'-'0')
-	
-public function undeadUnitId(int baseId) returns int
-	return baseId + 256*256*256*('c'-'0')
-	
-public function undeadBuildingId(int baseId) returns int
-	return baseId + 256*256*256*('d'-'0')
 
 	
 public function spawnData() returns LinkedList<SpawnData>
@@ -226,5 +224,14 @@ class NoviceCaster extends SpawnData
 		attackCooldown = 1.2
 		damageMin = 15
 		damageMax = 18
+			
+	override function additionalChanges(UnitDefinition ud, Race r)
+		if r == Race.Undead
+			ud.setTintingColor1Red(80)
+			ud.setTintingColor2Green(80)
+			ud.setTintingColor3Blue(100)
+			ud.setAttack1ProjectileArt("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl")
+		else
+			ud.setAttack1ProjectileArt("Abilities\\Spells\\Orc\\Bloodlust\\BloodlustTarget.mdl")
 			
 	

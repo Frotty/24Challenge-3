@@ -18,6 +18,7 @@ public class PlayerData
 	string 	name
 	string 	stylizedName
 	Builder builder
+	int income = 0
 	
 	construct(player p)
 		this.p = p

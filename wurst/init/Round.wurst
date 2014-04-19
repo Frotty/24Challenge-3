@@ -12,7 +12,7 @@ import Income
 
 public function newRound()
 	clearStatistics()
-	//clearArena()
+	clearArena()
 	createBuilders()
 	renewPlayers()
 	startIncome()

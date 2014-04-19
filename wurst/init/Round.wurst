@@ -12,13 +12,12 @@ public function newRound()
 	clearStatistics()
 	clearArena()
 	createBuilders()
-	adjustCamerasAndSelection()
+	initPlayers()
 	new Flag()
 
 public function endRound(Team winner)
 	showRoundStatistics(winner)
 
-function adjustCamerasAndSelection()
 	
 
 function createBuilders()
@@ -30,6 +29,19 @@ function createBuilders()
 	for p in green_players
 		p.builder = new Builder(createUnit(p.p, builderID, TEAM_GREEN_RITUAL.polarOffset((count*(360/green_players.getSize())).asAngleDegrees(), 128), angle(0)))
 		count++
+	
+function initPlayers()
+	for p in allPlayers
+		// initial resources
+		p.p
+			..setState(PLAYER_STATE_RESOURCE_GOLD, 100)
+			..setState(PLAYER_STATE_RESOURCE_LUMBER, 0)
+		// adjust camer
+		let builder = p.builder
+		PanCameraToTimedForPlayer(p.p, builder.pos.x, builder.pos.y, 0.)
+		SelectUnitForPlayerSingle(builder.actor, p.p)
+		
+	
 		
 function clearItems()
 	let e = GetEnumItem().getEntity()

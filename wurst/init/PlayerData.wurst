@@ -5,6 +5,7 @@ import Builder
 
 public LinkedList<PlayerData> red_players = new LinkedList<PlayerData>()
 public LinkedList<PlayerData> green_players = new LinkedList<PlayerData>()
+public LinkedList<PlayerData> allPlayers = new LinkedList<PlayerData>()
 
 public function player.getPData() returns PlayerData
 	return pData[this.getId()]
@@ -28,6 +29,7 @@ public class PlayerData
 			red_players.add(this)
 		else
 			green_players.add(this)
+		allPlayers.add(this)
 			
 public function initPlayers()
 	for p in bj_FORCE_ALL_PLAYERS

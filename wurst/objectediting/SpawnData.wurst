@@ -112,6 +112,7 @@ public enum Race
 
 public class SpawnData
 	int id
+	SpawnData upgradedFrom = null
 	int baseUnitUndead
 	int baseUnitOrc
 	string nameUndead
@@ -137,6 +138,7 @@ public class SpawnData
 	int goldCost = 50
 	int unitBuildTime = 30
 	int range = 100
+	string abilities = ""
 	
 	construct(int id, int baseUnitUndead, string nameUndead, int baseUnitOrc, string nameOrc)
 		this.id = id
@@ -161,9 +163,16 @@ public class SpawnData
 public function spawnData() returns LinkedList<SpawnData>
 	let l = new LinkedList<SpawnData>
 	l.add(new Ghoul)
-	l.add(new Archer)
+	let archer = new Archer
+	l.add(archer)
+	let mcArcher = new MultishotArcher
+	l.add(mcArcher)
 	l.add(new NoviceCaster)
 	l.add(new Tank)
+	
+	// upgrade relations:
+	mcArcher.upgradedFrom = archer
+	
 	return l
 
 // here are the different unit classes.
@@ -204,7 +213,33 @@ class Archer extends SpawnData
 		attackCooldown = 3.
 		damageMin = 20
 		damageMax = 50
+
+class MultishotArcher extends SpawnData
+	construct()
+		super('0mul', 'nska', "Mutlishot Skeleton Archer", 'ohun', "Mutlishot Troll Spearthrower")
 		
+		productionBuildingModelUndead = "buildings\\other\\NerubianZiggurat\\NerubianZiggurat.mdl"
+		iconUndead = "ReplaceableTextures\\CommandButtons\\BTNSkeletonArcher.blp"
+		productionBuildingScaleUndead = 0.8
+
+		productionBuildingModelOrc = "buildings\\orc\\WatchTower\\WatchTower.mdl"
+		iconOrc = "ReplaceableTextures\\CommandButtons\\BTNHeadhunter.blp"
+		productionBuildingScaleOrc = 0.8
+		
+		description = "An agressive ranged unit."
+		hotkey = "W"
+		armorType = Normal
+		attackType = Pierce
+		range = 600
+		goldCost = 200
+		attackCooldown = 3.
+		damageMin = 20
+		damageMax = 50
+		maxHP = 300
+		abilities = "uroc"
+	
+
+			
 
 class NoviceCaster extends SpawnData
 	construct()

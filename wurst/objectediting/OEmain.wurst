@@ -21,15 +21,32 @@ import ObjectIds
 		let undeadBuilding = createSpawnProductionBuilding(sd, Race.Undead)
 		
 		
+		// upgrades:
+		var upgradesOrc = ""
+		var upgradesUndead = ""
+		for sd2 in spawnData
+			if sd2.upgradedFrom == sd
+				if upgradesOrc != ""		
+					upgradesOrc += ","
+					upgradesUndead += ","
+				upgradesOrc += idInteger2IdString(orcBuildingId(sd2.id))
+				upgradesUndead += idInteger2IdString(undeadBuildingId(sd2.id))
+		
+		
+		orcBuilding.setUpgradesTo(upgradesOrc)
+		undeadBuilding.setUpgradesTo(upgradesUndead)
 		
 		// create the production building:
 		
+		if sd.upgradedFrom == null
+			if orcBuildings != ""
+				orcBuildings += ","
+				undeadBuildings += ","
+			orcBuildings += idInteger2IdString(orcBuildingId(sd.id))
+			undeadBuildings += idInteger2IdString(undeadBuildingId(sd.id))
 		
-		if orcBuildings != ""
-			orcBuildings += ","
-			undeadBuildings += ","
-		orcBuildings += idInteger2IdString(orcBuildingId(sd.id))
-		undeadBuildings += idInteger2IdString(undeadBuildingId(sd.id))
+			
+					
 	
 	orcBuilder.setStructuresBuilt(orcBuildings)
 	undeadBuilder.setStructuresBuilt(undeadBuildings)
@@ -65,7 +82,10 @@ function createSpawnUnit(SpawnData sd, Race r) returns UnitDefinition
 	
 	
 	// TODO further abilities
-	ud.setNormalAbilities("AInv")	
+	if (sd.abilities == "")
+		ud.setNormalAbilities("AInv")
+	else	
+		ud.setNormalAbilities("AInv,"+sd.abilities)
 	
 	ud.setHitPointsMaximumBase(sd.maxHP)
 	ud.setManaMaximum(sd.maxMana)

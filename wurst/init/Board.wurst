@@ -13,7 +13,7 @@ public function updateBoard()
 	mboard.getItem(1,1).setValue("|cffFFCC00" + wins_red.toString() + "|r")
 	mboard.getItem(1,2).setValue("|cffFFCC00" + income.toString() + "|r")
 	income = 0
-	for p in red_players
+	for p in green_players
 		income += p.income
 	mboard.getItem(1,4).setValue("|cffFFCC00" + wins_green.toString() + "|r")
 	mboard.getItem(1,5).setValue("|cffFFCC00" + income.toString() + "|r")

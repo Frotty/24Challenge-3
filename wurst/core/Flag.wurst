@@ -1,6 +1,7 @@
 package Flag
 import Soldier
 import MapConstants
+import SoundHelper
 import initlater Round
 
 constant FLAG_ID = 'Iflg'
@@ -18,7 +19,6 @@ public class Flag extends Entity
 		visual = CreateItem(FLAG_ID, pos.x, pos.y)
 		visual.setEntity(this)
 		INSTANCE = this
-		print("flagh create")
 		
 	construct(vec2 pos)
 		super(pos.withZ(0.), DUMMY_PLAYER)
@@ -48,6 +48,8 @@ public class Flag extends Entity
 		visual.remove()
 		INSTANCE = null
 			
+			
+public Sound flagSound = new Sound("Sound\\Interface\\QuestLog.wav", 0, false)
 		
 public function initFlag()
 	CreateTrigger()
@@ -56,6 +58,7 @@ public function initFlag()
 		let u = GetDyingUnit().getEntity()
 		let killer = GetKillingUnit().getEntity()
 		if u == Flag.INSTANCE.carrier and killer instanceof Soldier
+			
 			let soldier = killer castTo Soldier
 			// Transfer Flag to Killer
 			Flag.INSTANCE.carrier = soldier

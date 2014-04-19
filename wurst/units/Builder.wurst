@@ -1,7 +1,19 @@
 package Builder
 import Entity
+import MapConstants
 
 public class Builder extends UnitEntity
 	
 	construct(unit u)
 		super(u)
+		
+	override function update()
+		super.update()
+		if this.getTeam() == Team.RED
+			if pos.toVec2().distToSegmentSquared(vec2(-3074,2176), vec2(-2750,2500)) < 32*32
+				printTimedToPlayer("You may not leave your Base", 5, owner)
+				actor.setPos(TEAM_RED_RITUAL)
+		else
+			if pos.toVec2().distToSegmentSquared(vec2(2930,-3075), vec2(3265,-2737)) < 32*32
+				printTimedToPlayer("You may not leave your Base", 5, owner)
+				actor.setPos(TEAM_GREEN_RITUAL)

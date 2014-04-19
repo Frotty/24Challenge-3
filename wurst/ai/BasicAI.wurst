@@ -28,17 +28,11 @@ function Soldier.registerBasicAI()
 	// Check Flag Carrier
 	if this.getTeam() == flagTeam
 		// Allied Team holds flag
-		print("allied")
-		this.actor.issueAiTargetOrder("patrol", Flag.INSTANCE.carrier.actor)
+		this.actor.issueAiPointOrder("attack", Flag.INSTANCE.pos.toVec2())
 	else
-		print("flag not allied")
 		if flagTeam == Team.DUMMY
 			// Flag on Ground
-			print("flag on Ground")
-			if Flag.INSTANCE.visual == null
-				print("DAFUUUUUUUUUUUUUQ")
 			this.actor.issueAiTargetOrder("smart", Flag.INSTANCE.visual)
-			print("flag ordered")
 		else
 			// Enemy Team holds flag
 			this.actor.issueAiPointOrder("attack", Flag.INSTANCE.pos.toVec2())
@@ -53,7 +47,7 @@ public function initBasicAI()
 				// Check Flag Carrier
 				if s.actor.getTeam() == flagTeam
 					// Allied Team holds flag
-					s.actor.issueAiTargetOrder("patrol", Flag.INSTANCE.carrier.actor)
+					s.actor.issueAiPointOrder("attack", Flag.INSTANCE.pos.toVec2())
 				else
 					if flagTeam == Team.DUMMY
 						// Flag on Ground

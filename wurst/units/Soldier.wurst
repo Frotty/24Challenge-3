@@ -9,3 +9,5 @@ public class Soldier extends UnitEntity
 		super(u)
 		this.registerAI(AIType.BASIC)
 		
+	ondestroy
+		actor.remove()	

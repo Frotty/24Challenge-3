@@ -55,12 +55,17 @@ public function initBasicAI()
 					else
 						// Enemy Team holds flag
 						s.actor.issueAiPointOrder("attack", Flag.INSTANCE.pos.toVec2())
+			else
+				if s.actor.getTeam() == Team.RED
+					s.actor.issueAiPointOrder("move", TEAM_RED_RITUAL)
+				else
+					s.actor.issueAiPointOrder("move", TEAM_GREEN_RITUAL)
 	end)
 	CreateTrigger()
 		..registerAnyUnitEvent(EVENT_PLAYER_UNIT_PICKUP_ITEM)
 		..addAction(() -> begin
 		let carrier = GetTriggerUnit().getEntity() 
-		let flag = GetManipulatedItem().getEntity()
+		let flag = GetManipulatedItem()
 		Soldier soldier
 		if carrier instanceof Soldier
 			soldier = carrier castTo Soldier
@@ -68,7 +73,7 @@ public function initBasicAI()
 			if flag != null
 				flagSound.play()
 				Flag.INSTANCE.carrier = soldier
-				soldier.actor.addAbility('Aeth')
+				soldier.actor.setPathing(false)
 				if soldier.actor.getTeam() == Team.RED
 					soldier.actor.issueAiPointOrder("move", TEAM_RED_RITUAL)
 				else

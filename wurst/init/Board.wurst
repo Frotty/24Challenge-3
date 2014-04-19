@@ -34,7 +34,7 @@ public function initBoard()
 	mboard.getItem(1,3)..setStyle(true, false)..setValue("|cff1FBF00GREEN|r").setWidth(0.05)
 	mboard.getItem(0,4)..setStyle(true, false)..setValue("Wins").setWidth(0.025)
 	mboard.getItem(1,4)..setStyle(true, false)..setValue("0").setWidth(0.025)
-	mboard.getItem(0,5)..setStyle(true, false)..setValue("Income").setWidth(0.3)
+	mboard.getItem(0,5)..setStyle(true, false)..setValue("Income").setWidth(0.03)
 	mboard.getItem(1,5)..setStyle(true, false)..setValue("0").setWidth(0.03)
 	
 	CreateTimer().startPeriodic(1, function updateBoard)

@@ -231,11 +231,11 @@ class MultishotArcher extends SpawnData
 		
 		productionBuildingModelUndead = "buildings\\other\\NerubianZiggurat\\NerubianZiggurat.mdl"
 		iconUndead = "ReplaceableTextures\\CommandButtons\\BTNSkeletonArcher.blp"
-		productionBuildingScaleUndead = 0.8
+		productionBuildingScaleUndead = 1.0
 
-		productionBuildingModelOrc = "buildings\\orc\\WatchTower\\WatchTower.mdl"
+		productionBuildingModelOrc = "buildings\\undead\\Slaughterhouse\\Slaughterhouse.mdl"
 		iconOrc = "ReplaceableTextures\\CommandButtons\\BTNHeadhunter.blp"
-		productionBuildingScaleOrc = 0.8
+		productionBuildingScaleOrc = 1.0
 		
 		description = "An agressive ranged unit."
 		hotkey = "W"
@@ -254,7 +254,7 @@ class MultishotArcher extends SpawnData
 
 class NoviceCaster extends SpawnData
 	construct()
-		super('0nov', 'hsor', "Undead Sorceress", 'ohun', "Troll Caster")
+		super('0nov', 'hsor', "Undead Sorceress", 'odoc', "Troll Caster")
 		
 		productionBuildingModelUndead = "buildings\\undead\\Necropolis\\Necropolis.mdl"
 		productionBuildingScaleUndead = 0.5
@@ -278,9 +278,7 @@ class NoviceCaster extends SpawnData
 			ud.setTintingColor1Red(80)
 			ud.setTintingColor2Green(80)
 			ud.setTintingColor3Blue(100)
-			ud.setAttack1ProjectileArt("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl")
-		else
-			ud.setAttack1ProjectileArt("Abilities\\Spells\\Orc\\Bloodlust\\BloodlustTarget.mdl")
+		ud.setAttack1ProjectileArt("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl")
 		
 class Tank extends SpawnData
 	construct()

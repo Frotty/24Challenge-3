@@ -2,7 +2,7 @@ package UnitProduction
 import Soldier
 import PlayerData
 import SpawnData
-import ObjectIds
+import Income
 
 init
 	CreateTrigger()
@@ -28,7 +28,8 @@ function handleConstruction(unit building)
 
 	// income
 	let pd = b.getOwner().getPData()
-	pd.income += sd.goldCost div 10
+	adjustIncome(pd, sd.goldCost)
+	
 
 	// order the constructed building to build two units of the produced unit
 	for i = 1 to 2

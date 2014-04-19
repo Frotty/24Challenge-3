@@ -23,11 +23,11 @@ public function endRound(Team winner)
 function createBuilders()
 	var count = 0
 	for p in red_players
-		p.builder = new Builder(createUnit(p.p, builderID, TEAM_RED_RITUAL.polarOffset((count*(360/red_players.getSize())).asAngleDegrees(), 128), angle(0)))
+		p.builder = new Builder(createUnit(p.p, builderIDundead, TEAM_RED_RITUAL.polarOffset((count*(360/red_players.getSize())).asAngleDegrees(), 128), angle(0)))
 		count++
 	count = 0
 	for p in green_players
-		p.builder = new Builder(createUnit(p.p, builderID, TEAM_GREEN_RITUAL.polarOffset((count*(360/green_players.getSize())).asAngleDegrees(), 128), angle(0)))
+		p.builder = new Builder(createUnit(p.p, builderIDorc, TEAM_GREEN_RITUAL.polarOffset((count*(360/green_players.getSize())).asAngleDegrees(), 128), angle(0)))
 		count++
 	
 function initPlayers()

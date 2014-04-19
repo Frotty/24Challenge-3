@@ -1,13 +1,21 @@
 package OEbuilder
 import UnitObjEditing
+import SpawnData
 
 // here we create the builder unit
 
 
-public constant builderID = 'hbob'
+public constant builderIDundead = 'hbbu'
+public constant builderIDorc = 'hbbo'
 
-public function createBuilder() returns UnitDefinition
-	let bob = new UnitDefinition(builderID, 'uaco')
+public function createBuilder(Race r) returns UnitDefinition
+	UnitDefinition bob
+	if r == Race.Undead
+		bob = new UnitDefinition(builderIDundead, 'uaco')
+	else
+		bob = new UnitDefinition(builderIDorc, 'uaco')
+		bob.setModelFile("units\\orc\\Peon\\Peon.mdl")
+		bob.setIconGameInterface("ReplaceableTextures\\CommandButtons\\BTNPeon.blp")
 	bob.setName("Builder")
 	// restore ability, ghost, invulnerable
 	bob.setNormalAbilities("Arst,Aeth,Avul")

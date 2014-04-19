@@ -1,6 +1,7 @@
 package SpawnData
 import LinkedList
 import HashMap
+import UnitObjEditing
 
 // general class for storing the data of a spawned unit
 // from this, the OE data is generated, but it can also be used ingame
@@ -15,17 +16,19 @@ init
 	for s in spawnData
 		unitIdToSpawnData.put(s.id, s)
 		
-public function getSpawnData(int unitId) returns SpawnData
-	return unitIdToSpawnData.get(unitId)
-	
 public function unit.getSpawnData() returns SpawnData
-	return unitIdToSpawnData.get(this.getTypeId())
+	return getSpawnData(this.getTypeId())
 
+public function getSpawnData(int unitId) returns SpawnData
+	let firstLetter = unitId div (256*256*256)
+	return unitIdToSpawnData.get(unitId + 256*256*256*('0' - firstLetter))
+	
 public function unit.getSpawnDataForBuilding() returns SpawnData
 	return unitIdToSpawnData.get(this.getTypeId() - 256*256*256)
 
 public function unit.isSpawnUnit() returns boolean
-	return this.getSpawnData() != null
+	let firstLetter = this.getTypeId() div (256*256*256)
+	return firstLetter == 'a' or firstLetter == 'c'
 
 
 public enum SpawnClass
@@ -94,13 +97,20 @@ public function AttackType.toObjectString() returns string
 		case Hero
 			result = "hero"
 	return result
+	
+public enum Race
+	Undead
+	Orc
 
 public class SpawnData
 	int id
-	int baseUnit
-	string name
-	string description = ""
-	string icon = "ReplaceableTextures\\CommandButtons\\BTNBerserkForTrolls.blp"
+	int baseUnitUndead
+	int baseUnitOrc
+	string nameUndead
+	string nameOrc
+	string description = "" // could also be split in undead and orc
+	string iconOrc = "ReplaceableTextures\\CommandButtons\\BTNBerserkForTrolls.blp"
+	string iconUndead = "ReplaceableTextures\\CommandButtons\\BTNBerserkForTrolls.blp"
 	string hotkey = "X"
 	int maxHP = 100
 	int maxMana = 0
@@ -111,33 +121,53 @@ public class SpawnData
 	ArmorType armorType = Normal
 	int armor = 3
 	SpawnClass spawnClass = Attacker
-	string productionBuildingName
-	string productionBuildingModel = "buildings\\human\\Farm\\Farm.mdl"
-	real productionBuildingScale = 1.0
+	string productionBuildingModelOrc = "buildings\\human\\Farm\\Farm.mdl"
+	real productionBuildingScaleOrc = 0.7
+	string productionBuildingModelUndead = "buildings\\human\\Farm\\Farm.mdl"
+	real productionBuildingScaleUndead = 0.7
 	int goldCost = 50
 	int unitBuildTime = 10
 	
-	construct(int id, int baseUnit, string name)
+	construct(int id, int baseUnitUndead, string nameUndead, int baseUnitOrc, string nameOrc)
 		this.id = id
-		this.baseUnit = baseUnit
-		this.name = name
-		// generic name for production building:
-		this.productionBuildingName = name + " Barracks"
+		this.baseUnitOrc = baseUnitOrc
+		this.nameOrc = nameOrc
+		this.baseUnitUndead = baseUnitUndead
+		this.nameUndead = nameUndead
+
+	/** override this callback if you want to change other fields of the unit */ 
+	function additionalChanges(UnitDefinition ud, Race r)
 		
 	/** generate a nice description of this unit and its stats .... */
 	function getExtendedDescription() returns string
 		return "|cffeeeeee" + description + "|r\n\n"
 			+ "Damage: " + I2S(damageMin) + " - " + I2S(damageMax) + "\n"
 			+ "HP: " + I2S(maxHP) + "\n"
+
+
+public function orcUnitId(int baseId) returns int
+	return baseId + 256*256*256*('a'-'0')
+
+public function orcBuildingId(int baseId) returns int
+	return baseId + 256*256*256*('b'-'0')
+	
+public function undeadUnitId(int baseId) returns int
+	return baseId + 256*256*256*('c'-'0')
+	
+public function undeadBuildingId(int baseId) returns int
+	return baseId + 256*256*256*('d'-'0')
+
 	
 public function spawnData() returns LinkedList<SpawnData>
 	let l = new LinkedList<SpawnData>
-	l.add(ghoul())
+	l.add(new Ghoul())
 	return l
 
-	
-function ghoul() returns SpawnData
-	let r = new SpawnData('xgho', 'ugho', "Ghoul")
-	r.productionBuildingModel = "buildings\\undead\\Crypt\\Crypt.mdl"
-	r.description = "Ghouls are cheap and weak mealee units."
-	return r
+class Ghoul extends SpawnData
+	construct()
+		super('0gho', 'ugho', "Ghoul", 'ogru', "Grunt")
+		productionBuildingModelUndead = "buildings\\undead\\Crypt\\Crypt.mdl"
+		productionBuildingModelOrc = "buildings\\orc\\OrcBarracks\\OrcBarracks.mdl"
+		description = "Ghouls are cheap and weak mealee units."
+		hotkey = "Q"
+			

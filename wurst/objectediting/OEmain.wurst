@@ -10,61 +10,102 @@ import ObjectIds
 
 @compiletime function buildUnits()
 	let spawnData = spawnData() 
-	let bob = createBuilder()
-	var buildings = ""
+	let orcBuilder = createBuilder(Race.Orc)
+	let undeadBuilder = createBuilder(Race.Undead)
+	var orcBuildings = ""
+	var undeadBuildings = ""
 	for sd in spawnData
-		let ud = new UnitDefinition(sd.id, sd.baseUnit)
-		ud.setName(sd.name)
-		ud.setIconGameInterface(sd.icon)
-		ud.setTooltipBasic("Train " + sd.name + " [" + sd.hotkey + "]")
-		ud.setTooltipExtended(sd.getExtendedDescription())
-		ud.setHotkey(sd.hotkey)
-		
-		// set as ward to hide the command-card
-//		ud.setTargetedAs("ward")
-		ud.setUnitClassification("Ward")
-		
-		ud.setHitPointsMaximumBase(sd.maxHP)
-		ud.setManaMaximum(sd.maxMana)
-		ud.setNormalAbilities("")
+		let orcUnit = createSpawnUnit(sd, Race.Orc)
+		let orcBuilding = createSpawnProductionBuilding(sd, Race.Orc)
+		let undeadUnit = createSpawnUnit(sd, Race.Undead)
+		let undeadBuilding = createSpawnProductionBuilding(sd, Race.Undead)
 		
 		
-		// only attack 1
-		ud.setAttacksEnabled(1)
-		ud.setAttack1CooldownTime(sd.attackCooldown)
-		ud.setAttack1DamageBase(sd.damageMin-1)
-		ud.setAttack1DamageNumberofDice(1)
-		ud.setAttack1DamageSidesperDie(1 + sd.damageMax - sd.damageMin)
-		ud.setAttack1AttackType(sd.attackType.toObjectString())
-				
-		// armor
-		ud.setDefenseType(sd.armorType.toObjectString())
-		ud.setDefenseBase(sd.armor)
-		ud.setGoldCost(0)
-		ud.setFoodCost(0)
-		ud.setLumberCost(0)
-		ud.setBuildTime(sd.unitBuildTime)
 		
 		// create the production building:
-		int buildingId = sd.id + 256*256*256
-		let b = new BuildingDefinition(buildingId, 'hhou') // based on farm
-		b.setName(sd.productionBuildingName)
-		b.setIconGameInterface(sd.icon)
-		b.setTooltipBasic("Build " + sd.name + " [" + sd.hotkey + "]")
-		b.setTooltipExtended(sd.getExtendedDescription())
-		b.setHotkey(sd.hotkey)
-		b.setGoldCost(sd.goldCost)
-		b.setLumberCost(0)
-		b.setFoodProduced(0)
-		b.setRepairGoldCost(0)
-		b.setRepairLumberCost(0)
-		b.setModelFile(sd.productionBuildingModel)
-		b.setScalingValue(sd.productionBuildingScale)
-		b.setBuildTime(2)
-		b.setUnitsTrained(idInteger2IdString(sd.id))
 		
-		if buildings != ""
-			buildings += ","
-		buildings += idInteger2IdString(buildingId)
+		
+		if orcBuildings != ""
+			orcBuildings += ","
+			undeadBuildings += ","
+		orcBuildings += idInteger2IdString(orcBuildingId(sd.id))
+		undeadBuildings += idInteger2IdString(undeadBuildingId(sd.id))
 	
-	bob.setStructuresBuilt(buildings)
+	orcBuilder.setStructuresBuilt(orcBuildings)
+	undeadBuilder.setStructuresBuilt(undeadBuildings)
+	
+function createSpawnUnit(SpawnData sd, Race r) returns UnitDefinition
+	UnitDefinition ud
+	string name
+	if r == Race.Undead
+		ud = new UnitDefinition(undeadUnitId(sd.id), sd.baseUnitUndead)
+		ud.setIconGameInterface(sd.iconUndead)
+		name = sd.nameUndead
+	else
+		ud = new UnitDefinition(orcUnitId(sd.id), sd.baseUnitOrc)
+		ud.setIconGameInterface(sd.iconOrc)
+		name = sd.nameOrc
+	
+	ud.setName(name)
+	ud.setTooltipBasic("Train " + name + " [" + sd.hotkey + "]")
+	ud.setTooltipExtended(sd.getExtendedDescription())
+	ud.setHotkey(sd.hotkey)
+	
+	// set as ward to hide the command-card
+	ud.setUnitClassification("Ward")
+	
+	ud.setHitPointsMaximumBase(sd.maxHP)
+	ud.setManaMaximum(sd.maxMana)
+	ud.setNormalAbilities("")
+	
+	
+	// only attack 1
+	ud.setAttacksEnabled(1)
+	ud.setAttack1CooldownTime(sd.attackCooldown)
+	ud.setAttack1DamageBase(sd.damageMin-1)
+	ud.setAttack1DamageNumberofDice(1)
+	ud.setAttack1DamageSidesperDie(1 + sd.damageMax - sd.damageMin)
+	ud.setAttack1AttackType(sd.attackType.toObjectString())
+			
+	// armor
+	ud.setDefenseType(sd.armorType.toObjectString())
+	ud.setDefenseBase(sd.armor)
+	ud.setGoldCost(0)
+	ud.setFoodCost(0)
+	ud.setLumberCost(0)
+	ud.setBuildTime(sd.unitBuildTime)
+	
+	// do additional changes to the object
+	sd.additionalChanges(ud, r)
+	return ud
+	
+function createSpawnProductionBuilding(SpawnData sd, Race r) returns BuildingDefinition
+	BuildingDefinition b
+	string name
+	if r == Race.Undead
+		b = new BuildingDefinition(undeadBuildingId(sd.id), 'hhou') // based on farm
+		name = sd.nameUndead
+		b.setIconGameInterface(sd.iconUndead)
+		b.setModelFile(sd.productionBuildingModelUndead)
+		b.setScalingValue(sd.productionBuildingScaleUndead)
+		b.setUnitsTrained(idInteger2IdString(undeadUnitId(sd.id)))
+	else
+		b = new BuildingDefinition(orcBuildingId(sd.id), 'hhou') // based on farm 
+		name = sd.nameOrc
+		b.setIconGameInterface(sd.iconOrc)
+		b.setModelFile(sd.productionBuildingModelOrc)
+		b.setScalingValue(sd.productionBuildingScaleOrc)
+		b.setUnitsTrained(idInteger2IdString(orcUnitId(sd.id)))
+	b.setName(name)
+	b.setTooltipBasic("Build " + name + " [" + sd.hotkey + "]")
+	b.setTooltipExtended(sd.getExtendedDescription())
+	b.setHotkey(sd.hotkey)
+	b.setGoldCost(sd.goldCost)
+	b.setLumberCost(0)
+	b.setFoodProduced(0)
+	b.setRepairGoldCost(0)
+	b.setRepairLumberCost(0)
+	b.setBuildTime(2)
+	
+	
+	return b

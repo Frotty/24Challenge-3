@@ -163,6 +163,7 @@ public function spawnData() returns LinkedList<SpawnData>
 	let l = new LinkedList<SpawnData>
 	l.add(new Ghoul)
 	l.add(new Archer)
+	l.add(new NoviceCaster)
 	return l
 
 // here are the different unit classes.
@@ -171,12 +172,14 @@ public function spawnData() returns LinkedList<SpawnData>
 class Ghoul extends SpawnData
 	construct()
 		super('0gho', 'ugho', "Ghoul", 'ogru', "Grunt")
+
 		productionBuildingModelUndead = "buildings\\undead\\Crypt\\Crypt.mdl"
+		iconUndead = "ReplaceableTextures\\CommandButtons\\BTNGhoul.blp"
+
 		productionBuildingModelOrc = "buildings\\orc\\OrcBarracks\\OrcBarracks.mdl"
 		iconOrc = "ReplaceableTextures\\CommandButtons\\BTNGrunt.blp"
-		iconUndead = "ReplaceableTextures\\CommandButtons\\BTNGhoul.blp"
 		
-		description = "A cheap and weak mealee unit."
+		description = "A cheap and weak melee unit."
 		hotkey = "Q"
 		armorType = Large
 		attackType = Normal
@@ -185,14 +188,43 @@ class Ghoul extends SpawnData
 class Archer extends SpawnData
 	construct()
 		super('0arc', 'nska', "Skeleton Archer", 'ohun', "Troll Spearthrower")
+		
 		productionBuildingModelUndead = "buildings\\other\\NerubianZiggurat\\NerubianZiggurat.mdl"
+		iconUndead = "ReplaceableTextures\\CommandButtons\\BTNSkeletonArcher.blp"
+
 		productionBuildingModelOrc = "buildings\\orc\\WatchTower\\WatchTower.mdl"
 		iconOrc = "ReplaceableTextures\\CommandButtons\\BTNHeadhunter.blp"
-		iconUndead = "ReplaceableTextures\\CommandButtons\\BTNSkeletonArcher.blp"
 		
 		description = "An agressive ranged unit."
 		hotkey = "W"
 		armorType = Normal
 		attackType = Pierce
-		range = 500
+		range = 600
 		goldCost = 60
+		attackCooldown = 3.
+		damageMin = 20
+		damageMax = 50
+		
+
+class NoviceCaster extends SpawnData
+	construct()
+		super('0nov', 'hsor', "Undead Sorceress", 'ohun', "Troll Caster")
+		
+		productionBuildingModelUndead = "buildings\\undead\\Necropolis\\Necropolis.mdl"
+		productionBuildingScaleUndead = 0.5
+		iconUndead = "ReplaceableTextures\\CommandButtons\\BTNSorceress.blp"
+		
+		productionBuildingModelOrc = "buildings\\orc\\VoodooLounge\\VoodooLounge.mdl"
+		iconOrc = "ReplaceableTextures\\CommandButtons\\BTNWitchDoctor.blp"
+		
+		description = "An agressive ranged unit."
+		hotkey = "W"
+		armorType = ArmorType.Unarmored
+		attackType = AttackType.Magic
+		range = 500
+		goldCost = 65
+		attackCooldown = 1.2
+		damageMin = 15
+		damageMax = 18
+			
+	

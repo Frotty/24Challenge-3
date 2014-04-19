@@ -8,6 +8,19 @@ int wins_needed
 
 public function clearStatistics()
 
-public function showRoundStatistics(Team winner)
+public function showRoundStatistics(Team winner) returns boolean
+	var endGame = false
+	if winner == Team.RED
+		wins_red++
+		if wins_red >= wins_needed
+			endGame = true
+	else
+		wins_green++
+		if wins_green >= wins_needed
+			endGame = true
+	
 	printTimed(winner.toString() + " won the round!\nCurrent Score: |cffFF0202RED|r : |cffFFCC00" + wins_red.toString() 
 	+ "|r|cff1FBF00GREEN|r : |cffFFCC00" + wins_green.toString() + "|r\nNext Round will start in 10 seconds", 10)
+	
+	return endGame
+		

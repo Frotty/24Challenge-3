@@ -30,6 +30,7 @@ public class PlayerData
 		else
 			green_players.add(this)
 		allPlayers.add(this)
+		p.setState(PLAYER_STATE_GIVES_BOUNTY, 1)
 			
 public function initPlayers()
 	for p in bj_FORCE_ALL_PLAYERS

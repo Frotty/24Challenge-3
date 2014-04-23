@@ -13,7 +13,6 @@ public function startIncome()
 	incomeTimer.startPeriodic(DT, () -> begin
 		for p in allPlayers
 			payout[p.id] += p.getIncome() * DT / 60.
-			print("payout = " + payout[p.id].toString())
 			let g = payout[p.id].toInt()
 			payout[p.id] -= g
 			p.p.addGold(g)

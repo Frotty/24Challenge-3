@@ -19,7 +19,7 @@ init
 		let trained = GetTrainedUnit()
 		let b = GetTriggerUnit()
 		// issue building to construct a new unit of this type	
-		doAfter(0., () -> IssueImmediateOrderById(b, trained.getTypeId()))
+		doAfter(1., () -> IssueImmediateOrderById(b, trained.getTypeId()))
 		aiStartControl(trained)
 	end)
 	

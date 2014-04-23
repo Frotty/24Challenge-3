@@ -15,7 +15,7 @@ public class Archer extends SpawnData
 		
 		description = "An agressive ranged unit."
 		hotkey = "W"
-		armorType = Normal
+		armorType = ArmorType.Medium
 		attackType = Pierce
 		range = 600
 		goldCost = 60
@@ -31,13 +31,13 @@ public class MultishotArcher extends SpawnData
 		iconUndead = "ReplaceableTextures\\CommandButtons\\BTNSkeletonArcher.blp"
 		productionBuildingScaleUndead = 1.0
 
-		productionBuildingModelOrc = "buildings\\undead\\Slaughterhouse\\Slaughterhouse.mdl"
+		productionBuildingModelOrc = "buildings\\orc\\WatchTower\\WatchTower.mdl"
 		iconOrc = "ReplaceableTextures\\CommandButtons\\BTNHeadhunter.blp"
 		productionBuildingScaleOrc = 1.0
 		
-		description = "An agressive ranged unit."
+		description = "Ranged unit which can shoot at up to 4 targets at once."
 		hotkey = "W"
-		armorType = Normal
+		armorType = ArmorType.Medium
 		attackType = Pierce
 		range = 600
 		goldCost = 200

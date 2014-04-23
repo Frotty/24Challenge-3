@@ -1,7 +1,6 @@
 package InitSpawns
 import SpawnData
 import LinkedList
-import UnitObjEditing
 import SpawnTank
 import SpawnNoviceCaster
 import SpawnGhoul

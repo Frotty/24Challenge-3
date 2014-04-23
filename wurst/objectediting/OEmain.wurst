@@ -81,12 +81,16 @@ function createSpawnUnit(SpawnData sd, Race r) returns UnitDefinition
 	// no tech tech requirements
 	ud.setRequirements("")
 	
+	// collision size
+	ud.setCollisionSize(0.)
+	// group separation
+	ud.setGroupSeparationEnabled(true)
 	
-	// TODO further abilities
 	if (sd.abilities == "")
-		ud.setNormalAbilities("AInv")
+		// inventory and ghost ability
+		ud.setNormalAbilities("AInv,Aeth")
 	else	
-		ud.setNormalAbilities("AInv,"+sd.abilities)
+		ud.setNormalAbilities("AInv,Aeth,"+sd.abilities)
 	
 	ud.setHitPointsMaximumBase(sd.maxHP)
 	ud.setManaMaximum(sd.maxMana)

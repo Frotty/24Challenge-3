@@ -56,18 +56,18 @@ public function initFlag()
 		..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DEATH)
 		..addAction(() -> begin
 		let u = GetDyingUnit().getEntity()
-		let killer = GetKillingUnit()
-		if killer == null
-			Flag.INSTANCE.carrier = null
-		else
-			let kdata = killer.getEntity()
-			if u == Flag.INSTANCE.carrier and kdata instanceof Soldier
-				
-				let soldier = kdata castTo Soldier
+		let killer = GetKillingUnit().getEntity()
+		if killer instanceof Soldier
+			if u == Flag.INSTANCE.carrier
+				let soldier = killer castTo Soldier
 				// Transfer Flag to Killer
 				Flag.INSTANCE.carrier = soldier
 				Flag.INSTANCE.visual.remove()
 				soldier.actor.addItem(FLAG_ID)
 				Flag.INSTANCE.visual = UnitItemInSlot(soldier.actor, 0)
+		else
+			Flag.INSTANCE.carrier = null
+			Flag.INSTANCE.visual.remove()
+			Flag.INSTANCE.visual = createItem(FLAG_ID, u.pos.toVec2())
 	end)
 	

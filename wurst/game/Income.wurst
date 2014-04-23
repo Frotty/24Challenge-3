@@ -4,7 +4,7 @@ import initlater PlayerData
 timer incomeTimer = CreateTimer()
 
 public function startIncome()
-	incomeTimer.startPeriodic(10., () -> begin
+	incomeTimer.startPeriodic(20., () -> begin
 		for p in allPlayers
 			p.p.addGold(p.income)
 	end)

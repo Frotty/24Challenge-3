@@ -9,7 +9,7 @@ import AbilityObjEditing
 	d.setMissileArt("Abilities\\Weapons\\Arrow\\ArrowMissile.mdl")
 	d.setRequirements("")
 	d.setTargetsAllowed(1,"enemies")
-	d.setAreaofEffect(1, 800)
+	d.setAreaofEffect(1, 600)
 	
 
 @compiletime function rescueChainLightning()

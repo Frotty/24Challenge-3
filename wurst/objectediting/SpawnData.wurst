@@ -203,10 +203,11 @@ class Ghoul extends SpawnData
 		attackType = Normal
 		range = 90
 		goldCost = 40
-		unitBuildTime = 40
+		unitBuildTime = 50
 		maxHP = 300
-		damageMin = 20
-		damageMax = 30
+		attackCooldown = 1.8
+		damageMin = 21
+		damageMax = 24
 
 class Archer extends SpawnData
 	construct()
@@ -225,8 +226,10 @@ class Archer extends SpawnData
 		range = 600
 		goldCost = 60
 		attackCooldown = 3.
-		damageMin = 20
-		damageMax = 50
+		damageMin = 35
+		damageMax = 39
+		unitBuildTime = 55
+		maxHP = 250
 
 class MultishotArcher extends SpawnData
 	construct()
@@ -249,8 +252,9 @@ class MultishotArcher extends SpawnData
 		attackCooldown = 3.
 		damageMin = 20
 		damageMax = 50
-		maxHP = 300
+		maxHP = 250
 		abilities = "uroc"
+		unitBuildTime = 55
 	
 
 			
@@ -270,11 +274,13 @@ class NoviceCaster extends SpawnData
 		hotkey = "E"
 		armorType = ArmorType.Unarmored
 		attackType = AttackType.Magic
-		range = 500
+		range = 400
 		goldCost = 100
-		attackCooldown = 1.2
-		damageMin = 11
-		damageMax = 14
+		attackCooldown = 1.8
+		damageMin = 10
+		damageMax = 13
+		maxHP = 300
+		unitBuildTime = 65
 		
 	override function additionalChanges(UnitDefinition ud, Race r)
 		if r == Race.Undead
@@ -286,19 +292,22 @@ class NoviceCaster extends SpawnData
 class Tank extends SpawnData
 	construct()
 		super('0tan', 'uabo', "Abomination", 'otau', "Tauren")
-		productionBuildingModelUndead = "buildings\\other\\NerubianZiggurat\\NerubianZiggurat.mdl"
-		productionBuildingModelOrc = "buildings\\orc\\WatchTower\\WatchTower.mdl"
+		productionBuildingModelUndead = "buildings\\demon\\DemonGate\\DemonGate.mdl"
+		productionBuildingModelOrc = "buildings\\orc\\TaurenTotem\\TaurenTotem.mdl"
 		iconOrc = "ReplaceableTextures\\CommandButtons\\BTNTauren.blp"
 		iconUndead = "ReplaceableTextures\\CommandButtons\\BTNAbomination.blp"
 		
-		description = "A tank with a lot of hit points."
+		description = "A tank with a lot of hitpoints."
 		hotkey = "R"
-		armorType = Large
+		armorType = ArmorType.Fortified
 		attackType = Normal
 		range = 120
 		movespeed = 120
 		goldCost = 120
 		maxHP = 1000
-		armor = 15
-		unitBuildTime = 200
+		armor = 10
+		attackCooldown = 5
+		damageMin = 50
+		damageMax = 60
+		unitBuildTime = 115
 

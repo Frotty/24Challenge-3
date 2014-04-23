@@ -4,11 +4,11 @@ import initlater PlayerData
 timer incomeTimer = CreateTimer()
 
 public function startIncome()
-	incomeTimer.startPeriodic(20., () -> begin
+	incomeTimer.startPeriodic(10., () -> begin
 		for p in allPlayers
 			p.p.addGold(p.income)
 	end)
 
 /** adjust income when an upgrade is finished costing 'goldCost' */ 
 public function adjustIncome(PlayerData pd, int goldCost)
-	pd.income += min(1,goldCost div 20)
+	pd.income += max(1,goldCost div 20)

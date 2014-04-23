@@ -1,0 +1,22 @@
+package SpawnTank
+import SpawnData
+
+public class Tank extends SpawnData
+	construct()
+		super('0tan', 'uabo', "Abomination", 'otau', "Tauren")
+		productionBuildingModelUndead = "buildings\\other\\NerubianZiggurat\\NerubianZiggurat.mdl"
+		productionBuildingModelOrc = "buildings\\orc\\WatchTower\\WatchTower.mdl"
+		iconOrc = "ReplaceableTextures\\CommandButtons\\BTNTauren.blp"
+		iconUndead = "ReplaceableTextures\\CommandButtons\\BTNAbomination.blp"
+		
+		description = "A tank with a lot of hit points."
+		hotkey = "R"
+		armorType = Large
+		attackType = Normal
+		range = 120
+		movespeed = 120
+		goldCost = 120
+		maxHP = 1000
+		armor = 15
+		unitBuildTime = 200
+

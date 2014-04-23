@@ -1,0 +1,35 @@
+package SpawnNoviceCaster
+import SpawnData
+import UnitObjEditing
+
+public class NoviceCaster extends SpawnData
+	construct()
+		super('0nov', 'hsor', "Undead Sorceress", 'odoc', "Troll Caster")
+		
+		productionBuildingModelUndead = "buildings\\undead\\Necropolis\\Necropolis.mdl"
+		productionBuildingScaleUndead = 0.5
+		iconUndead = "ReplaceableTextures\\CommandButtons\\BTNSorceress.blp"
+		
+		productionBuildingModelOrc = "buildings\\orc\\VoodooLounge\\VoodooLounge.mdl"
+		iconOrc = "ReplaceableTextures\\CommandButtons\\BTNWitchDoctor.blp"
+		
+		description = "An agressive ranged unit."
+		hotkey = "E"
+		armorType = ArmorType.Unarmored
+		attackType = AttackType.Magic
+		range = 500
+		goldCost = 100
+		attackCooldown = 1.2
+		damageMin = 11
+		damageMax = 14
+		
+	override function additionalChanges(UnitDefinition ud, Race r)
+		if r == Race.Undead
+			ud.setTintingColor1Red(80)
+			ud.setTintingColor2Green(80)
+			ud.setTintingColor3Blue(100)
+		ud.setAttack1ProjectileArt("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl")
+		
+
+
+

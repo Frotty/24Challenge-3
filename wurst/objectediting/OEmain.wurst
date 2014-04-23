@@ -3,6 +3,7 @@ import OEbuilder
 import SpawnData
 import UnitObjEditing
 import ObjectIds
+import InitSpawns
 
 // OEmain is where everything is put together
 

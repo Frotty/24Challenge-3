@@ -169,5 +169,132 @@ public class SpawnData
 		return dep + goldCost
 
 
+
+// here are the different unit classes.
+// the name of the class is always the unit name of the undeads
+
+class Ghoul extends SpawnData
+	construct()
+		super('0gho', 'ugho', "Ghoul", 'ogru', "Grunt")
+
+		productionBuildingModelUndead = "buildings\\undead\\Crypt\\Crypt.mdl"
+		iconUndead = "ReplaceableTextures\\CommandButtons\\BTNGhoul.blp"
+
+		productionBuildingModelOrc = "buildings\\orc\\OrcBarracks\\OrcBarracks.mdl"
+		iconOrc = "ReplaceableTextures\\CommandButtons\\BTNGrunt.blp"
+		
+		description = "A cheap and weak melee unit."
+		hotkey = "Q"
+		armorType = Large
+		attackType = Normal
+		range = 90
+		goldCost = 40
+		unitBuildTime = 50
+		maxHP = 300
+		attackCooldown = 1.8
+		damageMin = 21
+		damageMax = 24
+
+class Archer extends SpawnData
+	construct()
+		super('0arc', 'nska', "Skeleton Archer", 'ohun', "Troll Spearthrower")
+		
+		productionBuildingModelUndead = "buildings\\other\\NerubianZiggurat\\NerubianZiggurat.mdl"
+		iconUndead = "ReplaceableTextures\\CommandButtons\\BTNSkeletonArcher.blp"
+
+		productionBuildingModelOrc = "buildings\\orc\\WatchTower\\WatchTower.mdl"
+		iconOrc = "ReplaceableTextures\\CommandButtons\\BTNHeadhunter.blp"
+		
+		description = "An agressive ranged unit."
+		hotkey = "W"
+		armorType = Normal
+		attackType = Pierce
+		range = 600
+		goldCost = 60
+		attackCooldown = 3.
+		damageMin = 35
+		damageMax = 39
+		unitBuildTime = 55
+		maxHP = 250
+
+class MultishotArcher extends SpawnData
+	construct()
+		super('0mul', 'nska', "Mutlishot Skeleton Archer", 'ohun', "Mutlishot Troll Spearthrower")
+		
+		productionBuildingModelUndead = "buildings\\other\\NerubianZiggurat\\NerubianZiggurat.mdl"
+		iconUndead = "ReplaceableTextures\\CommandButtons\\BTNSkeletonArcher.blp"
+		productionBuildingScaleUndead = 1.0
+
+		productionBuildingModelOrc = "buildings\\undead\\Slaughterhouse\\Slaughterhouse.mdl"
+		iconOrc = "ReplaceableTextures\\CommandButtons\\BTNHeadhunter.blp"
+		productionBuildingScaleOrc = 1.0
+		
+		description = "An agressive ranged unit."
+		hotkey = "W"
+		armorType = Normal
+		attackType = Pierce
+		range = 600
+		goldCost = 200
+		attackCooldown = 3.
+		damageMin = 20
+		damageMax = 50
+		maxHP = 250
+		abilities = "uroc"
+		unitBuildTime = 55
 	
+
+			
+
+class NoviceCaster extends SpawnData
+	construct()
+		super('0nov', 'hsor', "Undead Sorceress", 'odoc', "Troll Caster")
+		
+		productionBuildingModelUndead = "buildings\\undead\\Necropolis\\Necropolis.mdl"
+		productionBuildingScaleUndead = 0.5
+		iconUndead = "ReplaceableTextures\\CommandButtons\\BTNSorceress.blp"
+		
+		productionBuildingModelOrc = "buildings\\orc\\VoodooLounge\\VoodooLounge.mdl"
+		iconOrc = "ReplaceableTextures\\CommandButtons\\BTNWitchDoctor.blp"
+		
+		description = "An agressive ranged unit."
+		hotkey = "E"
+		armorType = ArmorType.Unarmored
+		attackType = AttackType.Magic
+		range = 400
+		goldCost = 100
+		attackCooldown = 1.8
+		damageMin = 10
+		damageMax = 13
+		maxHP = 300
+		unitBuildTime = 65
+		
+	override function additionalChanges(UnitDefinition ud, Race r)
+		if r == Race.Undead
+			ud.setTintingColor1Red(80)
+			ud.setTintingColor2Green(80)
+			ud.setTintingColor3Blue(100)
+		ud.setAttack1ProjectileArt("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl")
+		
+class Tank extends SpawnData
+	construct()
+		super('0tan', 'uabo', "Abomination", 'otau', "Tauren")
+		productionBuildingModelUndead = "buildings\\demon\\DemonGate\\DemonGate.mdl"
+		productionBuildingModelOrc = "buildings\\orc\\TaurenTotem\\TaurenTotem.mdl"
+		iconOrc = "ReplaceableTextures\\CommandButtons\\BTNTauren.blp"
+		iconUndead = "ReplaceableTextures\\CommandButtons\\BTNAbomination.blp"
+		
+		description = "A tank with a lot of hitpoints."
+		hotkey = "R"
+		armorType = ArmorType.Fortified
+		attackType = Normal
+		range = 120
+		movespeed = 120
+		goldCost = 120
+		maxHP = 1000
+		armor = 10
+		attackCooldown = 5
+		damageMin = 50
+		damageMax = 60
+		unitBuildTime = 115
+
 

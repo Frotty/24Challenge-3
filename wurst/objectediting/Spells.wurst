@@ -1,6 +1,16 @@
 package Spells
 import AbilityObjEditing
 
+@compiletime function multihotAbility()
+	let d = new AbilityDefinitionRocketAttack('uroc')
+	d.setMaximumNumberofTargets(1, 4)
+	d.setDamagePerTarget(1, 20)
+	d.setMaximumTotalDamage(1, 50)
+	d.setMissileArt("Abilities\\Weapons\\Arrow\\ArrowMissile.mdl")
+	d.setRequirements("")
+	d.setTargetsAllowed(1,"enemies")
+	d.setAreaofEffect(1, 600)
+	
 
 @compiletime function rescueChainLightning()
 	let d = new AbilityDefinitionChainLightningcreep('uccl')

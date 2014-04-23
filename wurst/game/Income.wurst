@@ -1,14 +1,30 @@
 package Income
 import initlater PlayerData
+import BigNum
 
 timer incomeTimer = CreateTimer()
 
+/** timer interval */
+constant DT = 0.1
+real array payout
+
+
 public function startIncome()
-	incomeTimer.startPeriodic(10., () -> begin
+	incomeTimer.startPeriodic(DT, () -> begin
 		for p in allPlayers
-			p.p.addGold(p.income)
+			payout[p.id] += p.getIncome() * DT / 60.
+			print("payout = " + payout[p.id].toString())
+			let g = payout[p.id].toInt()
+			payout[p.id] -= g
+			p.p.addGold(g)
 	end)
 
 /** adjust income when an upgrade is finished costing 'goldCost' */ 
 public function adjustIncome(PlayerData pd, int goldCost)
-	pd.income += max(1,goldCost div 20)
+	pd.goldSpent += goldCost
+
+
+/** calculates the income per minute of the player based on the gold he spent so far */
+public function PlayerData.getIncome() returns int
+	// not sure if square root is the right tax function to use
+	return R2I(5*SquareRoot(1.*this.goldSpent))

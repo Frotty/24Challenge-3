@@ -40,7 +40,7 @@ function createBuilders()
 function renewPlayers()
 	for p in allPlayers
 		// initial income
-		p.income = 0
+		p.goldSpent = 0
 		// initial resources
 		p.p
 			..setState(PLAYER_STATE_RESOURCE_GOLD, 100)

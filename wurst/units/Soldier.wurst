@@ -1,13 +1,20 @@
 package Soldier
 import public Entity
 import BasicAI
+import LinkedListModule
 
 public class Soldier extends UnitEntity
 	AIType aitype = AIType.NONE
+	
+	use LinkedListModule
+	
+	
 	
 	construct(unit u)
 		super(u)
 		this.registerAI(AIType.BASIC)
 		
 	ondestroy
-		actor.remove()	
+		actor.remove()
+		if AI_currentSoldier == this
+			AI_currentSoldier = this.next

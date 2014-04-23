@@ -5,9 +5,14 @@ import initlater Flag
 import MapConstants
 import LinkedList
 
-constant AI_UPDATE_PERIOD = 5.
+constant AI_UPDATE_PERIOD = 0.1
 
 LinkedList<Soldier> soldiers = new LinkedList<Soldier>()
+
+public Soldier AI_currentSoldier =  null
+
+constant aiTimer = CreateTimer()
+
 
 public function Soldier.registerAI(AIType aitype)
 	switch aitype
@@ -39,28 +44,8 @@ function Soldier.registerBasicAI()
 
 
 public function initBasicAI()
-	CreateTimer()
-		.startPeriodic(AI_UPDATE_PERIOD, () -> begin
-		Team flagTeam = Flag.getTeam()
-		for s in soldiers
-			if s != Flag.INSTANCE.carrier
-				// Check Flag Carrier
-				if s.actor.getTeam() == flagTeam
-					// Allied Team holds flag
-					s.actor.issueAiPointOrder("attack", Flag.INSTANCE.pos.toVec2())
-				else
-					if flagTeam == Team.DUMMY
-						// Flag on Ground
-						s.actor.issueAiTargetOrder("smart", Flag.INSTANCE.visual)
-					else
-						// Enemy Team holds flag
-						s.actor.issueAiPointOrder("attack", Flag.INSTANCE.pos.toVec2())
-			else
-				if s.actor.getTeam() == Team.RED
-					s.actor.issueAiPointOrder("move", TEAM_RED_RITUAL)
-				else
-					s.actor.issueAiPointOrder("move", TEAM_GREEN_RITUAL)
-	end)
+	aiTimer.start(aiUpdatePeriod(), function aiUpdate)
+		
 	CreateTrigger()
 		..registerAnyUnitEvent(EVENT_PLAYER_UNIT_PICKUP_ITEM)
 		..addAction(() -> begin
@@ -80,4 +65,39 @@ public function initBasicAI()
 					soldier.actor.issueAiPointOrder("move", TEAM_GREEN_RITUAL)
 				printTimed(soldier.getTeam().toString() + " picked up the flag!", 5)
 	end)
+	
+function aiUpdatePeriod() returns real
+	// the update period gets smaller when there are more soldiers
+	// +1 to avoid division by zero
+	return 0.001 + 4. / (1 + soldiers.getSize())
+
+function aiUpdate()
+	aiTimer.start(aiUpdatePeriod(), function aiUpdate)
+	if AI_currentSoldier == null
+		AI_currentSoldier = Soldier.first
+	if AI_currentSoldier != null
+		controlSoldier(AI_currentSoldier)
+		AI_currentSoldier = AI_currentSoldier.next
 		
+function controlSoldier(Soldier s)
+	Team flagTeam = Flag.getTeam()
+	AddSpecialEffectTarget("Abilities\\Spells\\Other\\TalkToMe\\TalkToMe.mdl", s.actor, "overhead").destr()
+	if s != Flag.INSTANCE.carrier
+		// Check Flag Carrier
+		if s.actor.getTeam() == flagTeam
+			// Allied Team holds flag
+			if s.pos.distToVec(Flag.INSTANCE.pos) > 800
+				// when the unit is to far away from the flag, walk back to flag
+				s.actor.issueAiPointOrder("attack", Flag.INSTANCE.pos.toVec2())
+		else
+			if flagTeam == Team.DUMMY
+				// Flag on Ground
+				s.actor.issueAiTargetOrder("smart", Flag.INSTANCE.visual)
+			else
+				// Enemy Team holds flag
+				s.actor.issueAiPointOrder("attack", Flag.INSTANCE.pos.toVec2())
+	else
+		if s.actor.getTeam() == Team.RED
+			s.actor.issueAiPointOrder("move", TEAM_RED_RITUAL)
+		else
+			s.actor.issueAiPointOrder("move", TEAM_GREEN_RITUAL)

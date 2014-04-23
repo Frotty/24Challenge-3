@@ -8,3 +8,7 @@ public function startIncome()
 		for p in allPlayers
 			p.p.addGold(p.income)
 	end)
+
+/** adjust income when an upgrade is finished costing 'goldCost' */ 
+public function adjustIncome(PlayerData pd, int goldCost)
+	pd.income += min(1,goldCost div 20)

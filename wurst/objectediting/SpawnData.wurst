@@ -2,6 +2,7 @@ package SpawnData
 import LinkedList
 import HashMap
 import UnitObjEditing
+import initlater InitSpawns
 
 // general class for storing the data of a spawned unit
 // from this, the OE data is generated, but it can also be used ingame
@@ -168,21 +169,6 @@ public class SpawnData
 		return dep + goldCost
 
 
-	
-public function spawnData() returns LinkedList<SpawnData>
-	let l = new LinkedList<SpawnData>
-	l.add(new Ghoul)
-	let archer = new Archer
-	l.add(archer)
-	let mcArcher = new MultishotArcher
-	l.add(mcArcher)
-	l.add(new NoviceCaster)
-	l.add(new Tank)
-	
-	// upgrade relations:
-	mcArcher.upgradedFrom = archer
-	
-	return l
 
 // here are the different unit classes.
 // the name of the class is always the unit name of the undeads
@@ -310,4 +296,5 @@ class Tank extends SpawnData
 		damageMin = 50
 		damageMax = 60
 		unitBuildTime = 115
+
 

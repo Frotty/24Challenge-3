@@ -2,7 +2,8 @@ package UnitProduction
 import Soldier
 import PlayerData
 import SpawnData
-import ObjectIds
+import Income
+import ClosureTimers
 
 init
 	CreateTrigger()
@@ -17,8 +18,8 @@ init
 		..addAction(() -> begin
 		let trained = GetTrainedUnit()
 		let b = GetTriggerUnit()
-		// issue building to construct a new unit of this type		
-		IssueImmediateOrderById(b, trained.getTypeId())
+		// issue building to construct a new unit of this type	
+		doAfter(0., () -> IssueImmediateOrderById(b, trained.getTypeId()))
 		aiStartControl(trained)
 	end)
 	
@@ -28,7 +29,8 @@ function handleConstruction(unit building)
 
 	// income
 	let pd = b.getOwner().getPData()
-	pd.income += sd.goldCost div 10
+	adjustIncome(pd, sd.goldCost)
+	
 
 	// order the constructed building to build two units of the produced unit
 	for i = 1 to 2

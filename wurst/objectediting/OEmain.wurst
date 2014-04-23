@@ -3,6 +3,7 @@ import OEbuilder
 import SpawnData
 import UnitObjEditing
 import ObjectIds
+import InitSpawns
 
 // OEmain is where everything is put together
 
@@ -70,7 +71,7 @@ function createSpawnUnit(SpawnData sd, Race r) returns UnitDefinition
 	ud.setTooltipExtended(sd.getExtendedDescription())
 	ud.setHotkey(sd.hotkey)
 	
-	ud.setGoldBountyAwardedBase(sd.getCompleteGoldCost() div 10 - 1)
+	ud.setGoldBountyAwardedBase(min(0, sd.getCompleteGoldCost() div 40 - 1))
 	ud.setGoldBountyAwardedNumberofDice(1)
 	ud.setGoldBountyAwardedSidesperDie(1)
 	

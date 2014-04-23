@@ -1,0 +1,26 @@
+package SpawnGhoul
+import SpawnData
+
+public class Ghoul extends SpawnData
+	construct()
+		super('0gho', 'ugho', "Ghoul", 'ogru', "Grunt")
+
+		productionBuildingModelUndead = "buildings\\undead\\Crypt\\Crypt.mdl"
+		iconUndead = "ReplaceableTextures\\CommandButtons\\BTNGhoul.blp"
+
+		productionBuildingModelOrc = "buildings\\orc\\OrcBarracks\\OrcBarracks.mdl"
+		iconOrc = "ReplaceableTextures\\CommandButtons\\BTNGrunt.blp"
+		
+		description = "A cheap and weak melee unit."
+		hotkey = "Q"
+		armorType = Large
+		attackType = Normal
+		range = 90
+		goldCost = 40
+		unitBuildTime = 40
+		maxHP = 300
+		damageMin = 20
+		damageMax = 30
+
+
+

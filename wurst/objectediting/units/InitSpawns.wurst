@@ -1,0 +1,31 @@
+package InitSpawns
+import SpawnData
+import LinkedList
+import UnitObjEditing
+import SpawnTank
+import SpawnNoviceCaster
+import SpawnGhoul
+import SpawnArcher
+
+public function spawnData() returns LinkedList<SpawnData>
+	let l = new LinkedList<SpawnData>
+	l.add(new Ghoul)
+	let archer = new Archer
+	l.add(archer)
+	let mcArcher = new MultishotArcher
+	l.add(mcArcher)
+	l.add(new NoviceCaster)
+	l.add(new Tank)
+	
+	// upgrade relations:
+	mcArcher.upgradedFrom = archer
+	
+	return l
+
+
+
+	
+
+			
+
+

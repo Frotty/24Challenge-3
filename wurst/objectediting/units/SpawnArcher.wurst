@@ -1,0 +1,58 @@
+package SpawnArcher
+import SpawnData
+import UnitObjEditing
+import AbilityObjEditing
+
+public class Archer extends SpawnData
+	construct()
+		super('0arc', 'nska', "Skeleton Archer", 'ohun', "Troll Spearthrower")
+		
+		productionBuildingModelUndead = "buildings\\other\\NerubianZiggurat\\NerubianZiggurat.mdl"
+		iconUndead = "ReplaceableTextures\\CommandButtons\\BTNSkeletonArcher.blp"
+
+		productionBuildingModelOrc = "buildings\\orc\\WatchTower\\WatchTower.mdl"
+		iconOrc = "ReplaceableTextures\\CommandButtons\\BTNHeadhunter.blp"
+		
+		description = "An agressive ranged unit."
+		hotkey = "W"
+		armorType = Normal
+		attackType = Pierce
+		range = 600
+		goldCost = 60
+		attackCooldown = 3.
+		damageMin = 20
+		damageMax = 50
+
+public class MultishotArcher extends SpawnData
+	construct()
+		super('0mul', 'nska', "Mutlishot Skeleton Archer", 'ohun', "Mutlishot Troll Spearthrower")
+		
+		productionBuildingModelUndead = "buildings\\other\\NerubianZiggurat\\NerubianZiggurat.mdl"
+		iconUndead = "ReplaceableTextures\\CommandButtons\\BTNSkeletonArcher.blp"
+		productionBuildingScaleUndead = 1.0
+
+		productionBuildingModelOrc = "buildings\\undead\\Slaughterhouse\\Slaughterhouse.mdl"
+		iconOrc = "ReplaceableTextures\\CommandButtons\\BTNHeadhunter.blp"
+		productionBuildingScaleOrc = 1.0
+		
+		description = "An agressive ranged unit."
+		hotkey = "W"
+		armorType = Normal
+		attackType = Pierce
+		range = 600
+		goldCost = 200
+		attackCooldown = 3.
+		damageMin = 20
+		damageMax = 50
+		maxHP = 300
+		abilities = "uroc"
+		
+@compiletime function multihotAbility()
+	let d = new AbilityDefinitionRocketAttack('uroc')
+	d.setMaximumNumberofTargets(1, 4)
+	d.setDamagePerTarget(1, 20)
+	d.setMaximumTotalDamage(1, 50)
+	d.setMissileArt("Abilities\\Weapons\\Arrow\\ArrowMissile.mdl")
+	d.setRequirements("")
+	d.setTargetsAllowed(1,"enemies")
+	d.setAreaofEffect(1, 800)

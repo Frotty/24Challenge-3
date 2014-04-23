@@ -3,6 +3,7 @@ import Soldier
 import PlayerData
 import SpawnData
 import Income
+import ClosureTimers
 
 init
 	CreateTrigger()
@@ -17,8 +18,8 @@ init
 		..addAction(() -> begin
 		let trained = GetTrainedUnit()
 		let b = GetTriggerUnit()
-		// issue building to construct a new unit of this type		
-		IssueImmediateOrderById(b, trained.getTypeId())
+		// issue building to construct a new unit of this type	
+		doAfter(0., () -> IssueImmediateOrderById(b, trained.getTypeId()))
 		aiStartControl(trained)
 	end)
 	
